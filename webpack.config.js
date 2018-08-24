@@ -1,3 +1,4 @@
+import path from 'path';
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -6,7 +7,7 @@ const port = process.env.PORT || 3000;
 module.exports = {
   entry: __dirname + "/src/index.js",
   output: {
-    path: __dirname + "/public",
+    path: path.resolve(__dirname, "dist"),
     filename: "bundle.js"
   },
   mode: 'development',
