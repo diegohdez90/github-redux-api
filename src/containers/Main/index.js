@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Container from '../../styledComponents/Container'
 import Form from '../../components/Form';
 import GetToken from '../../components/GetToken';
-class Index extends React.Component {
+class Main extends React.Component {
   render() {
     return (<Container>
       <GetToken />
@@ -11,4 +12,11 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+Main.propTypes ={
+  username: PropTypes.string,
+  password: PropTypes.string,
+  token: PropTypes.string,
+  repos: PropTypes.array
+}
+
+export default Main;
