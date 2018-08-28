@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import RepoElement from '../../styledComponents/RepoElement';
 
 const Repo = ({repo}) => (
-  <li>{repo.name}</li>
+  <RepoElement>
+    {repo.name}
+  </RepoElement>
 )
 
 Repo.propTypes = {

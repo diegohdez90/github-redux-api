@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Repo from '../Repo';
-const mapStateToProps = (state) => {
-  console.log('Repos', state);
-  
+const mapStateToProps = (state) => {  
   return {
     repos: state.reducer.repos
   }
@@ -15,7 +13,7 @@ const Repos = ({repos}) => (repos) ? (
     {repos.length}
     <ul>
     {
-      repos.map(repo => <Repo repo={repo} />)
+      repos.map(repo => <Repo key={repo.id} repo={repo} />)
     }
     </ul>
   </div>) : (<div>No repos</div>)
