@@ -1,4 +1,12 @@
-import { USERNAME, PASSWORD, GET_TOKEN, FETCH_USER_REPOS_SUCCESS, GITHUB_ACCOUNT, FETCH_USER_REPOS } from "./utils/constants";
+import { USERNAME, 
+  PASSWORD, 
+  FETCH_GET_TOKEN, 
+  FETCH_GET_TOKEN_SUCCESS, 
+  FETCH_USER_REPOS_SUCCESS, 
+  FETCH_ACCOUNT,
+  FETCH_ACCOUNT_SUCCESS,
+  GITHUB_ACCOUNT, 
+  FETCH_USER_REPOS } from "./utils/constants";
 
 export function updateUsernameToken(username) {
   return {
@@ -14,9 +22,19 @@ export function updatePasswordToken(password) {
   };
 }
 
+export function fetchGetToken(username, password) {
+  console.log(username, password);
+  
+  return {
+    type: FETCH_GET_TOKEN,
+    username,
+    password
+  }
+}
+
 export function getToken(token) {
   return {
-    type: GET_TOKEN,
+    type: FETCH_GET_TOKEN_SUCCESS,
     token
   };
 }
@@ -28,10 +46,26 @@ export function updateGithubAccount (githubAccount) {
   }
 }
 
-export function fetchUserRepos (githubAccount) {
+export function fetchAccount (githubAccount, token) {
+  return {
+    type: FETCH_ACCOUNT,
+    githubAccount,
+    token
+  };
+}
+
+export function fetchAccountSuccess (account) {
+  return {
+    type: FETCH_ACCOUNT_SUCCESS,
+    account
+  };
+}
+
+export function fetchUserRepos (githubAccount, token) {
   return {
     type: FETCH_USER_REPOS,
-    githubAccount
+    githubAccount, 
+    token
   }
 };
 

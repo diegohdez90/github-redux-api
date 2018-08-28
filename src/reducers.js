@@ -1,5 +1,10 @@
 import { combineReducers }  from 'redux'
-import { USERNAME, PASSOWORD, TOKEN, FETCH_USER_REPOS_SUCCESS, GITHUB_ACCOUNT } from './utils/constants';
+import { USERNAME, 
+  PASSOWORD, 
+  FETCH_GET_TOKEN_SUCCESS, 
+  FETCH_USER_REPOS_SUCCESS,
+  FETCH_ACCOUNT_SUCCESS,
+  GITHUB_ACCOUNT } from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
@@ -9,9 +14,14 @@ function reducer(state = [], action) {
     case PASSOWORD:
       const { password } = action;
       return {...state, password };
-    case TOKEN:
+    case FETCH_GET_TOKEN_SUCCESS:
       const { token } = action;
+      console.log(token);
+      
       return {...state, token };
+    case FETCH_ACCOUNT_SUCCESS:
+      const {account} = action;
+      return {...state, account};
     case GITHUB_ACCOUNT:
       const {githubAccount} = action;
       return {...state, githubAccount};
