@@ -16,9 +16,7 @@ function reducer(state = [], action) {
       const {githubAccount} = action;
       return {...state, githubAccount};
     case FETCH_USER_REPOS_SUCCESS:
-      const {repos} = action;
-      console.log('repos', repos);
-      
+      const {repos} = action;      
       return {...state, repos };
     default:
       return state;
