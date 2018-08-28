@@ -6,7 +6,6 @@ const RepoElement = styled.li`
   padding: 5%;
   border: 1px solid #df2;
   list-style-position: inside;
-  cursor: pointer;
 `;
 
 export default RepoElement;
