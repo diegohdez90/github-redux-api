@@ -8,6 +8,7 @@ const Repo = ({repo}) => (<RepoElement>
     <RepoDetails 
       watches={0}
       forks={repo.forks}
+      stars={repo.stargazers_count}
       follows={0}
     />
   </RepoElement>)
