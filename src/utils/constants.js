@@ -1,0 +1,8 @@
+export const USERNAME = "USERNAME";
+export const PASSWORD = "PASSWORD";
+export const TOKEN = "TOKEN"
+export const GITHUB_ACCOUNT = "GITHUB_ACCOUNT";
+export const FETCH_USER_REPOS = "FETCH_USER_REPOS";
+export const FETCH_USER_REPOS_FAILURE = "FETCH_USER_REPOS_FAILURE";
+export const FETCH_USER_REPOS_SUCCESS = "FETCH_USER_REPOS_SUCCESS";
+export const REPOS = "REPOS";
