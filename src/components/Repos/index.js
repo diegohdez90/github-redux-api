@@ -2,15 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Repo from '../Repo';
-const mapStateToProps = (state) => {  
+const mapStateToProps = (state) => {
+  console.log(state);
+  
   return {
-    repos: state.reducer.repos
+    repos: state.reducer.repos,
+    account: state.reducer.account 
   }
 }
 
-const Repos = ({repos}) => (repos) ? (
+const Repos = ({repos, account}) => (repos) ? (
   <div>
-    {repos.length}
+    {account.name} has {account.public_repos} public repositories
     <ul>
     {
       repos.map(repo => <Repo key={repo.id} repo={repo} />)
@@ -19,6 +22,7 @@ const Repos = ({repos}) => (repos) ? (
   </div>) : (<div>No repos</div>)
 
 Repos.propTyes = {
+  account: PropTypes.object,
   repos: PropTypes.array
 }
 
