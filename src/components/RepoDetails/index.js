@@ -7,7 +7,7 @@ import Watches from '../Watches';
 const RepoDetails = ({watches, stars, forks, name}) => (
   <div>
     <Watches watches={watches} repo={name}/>
-    <Stars stars={stars} />
+    <Stars stars={stars} repo={name} />
     <Forks forks={forks} />
   </div>);
 

@@ -8,7 +8,11 @@ import { USERNAME,
   GITHUB_ACCOUNT, 
   FETCH_USER_REPOS, 
   WATCH_REPO,
-  WATCH_REPO_SUCCESS} from "./utils/constants";
+  WATCH_REPO_SUCCESS,
+  WATCH_REPO_FAILURE,
+  STAR_REPO,
+  STAR_REPO_SUCCESS,
+  STAR_REPO_FAILURE} from "./utils/constants";
 
 export function updateUsernameToken(username) {
   return {
@@ -25,8 +29,6 @@ export function updatePasswordToken(password) {
 }
 
 export function fetchGetToken(username, password) {
-  console.log(username, password);
-  
   return {
     type: FETCH_GET_TOKEN,
     username,
@@ -97,6 +99,38 @@ export function watchRepo (repoToWatch, account, token) {
 export function watchRepoSuccess (message) {
   return {
     type: WATCH_REPO_SUCCESS,
+    message
+  };
+};
+
+export function watchRepoFailure (message) {
+  console.log(message);
+  return {
+    type: WATCH_REPO_FAILURE,
+    message
+  };
+};
+
+
+export function starRepo (repoToStar, account, token) {
+  return {
+    type: STAR_REPO,
+    repoToStar,
+    account,
+    token
+  };
+};
+
+export function starRepoSuccess (message) {
+  return {
+    type: STAR_REPO_SUCCESS,
+    message
+  };
+};
+
+export function starRepoFailure (message) {
+  return {
+    type: STAR_REPO_FAILURE,
     message
   };
 };

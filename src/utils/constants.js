@@ -16,3 +16,7 @@ export const REPOS = "REPOS";
 export const WATCH_REPO = "WATCH_REPO";
 export const WATCH_REPO_SUCCESS = "WATCH_REPO_SUCCESS";
 export const WATCH_REPO_FAILURE = "WATCH_REPO_FAILURE";
+
+export const STAR_REPO = "STAR_REPO";
+export const STAR_REPO_SUCCESS = "STAR_REPO_SUCCESS";
+export const STAR_REPO_FAILURE = "STAR_REPO_FAILURE";
