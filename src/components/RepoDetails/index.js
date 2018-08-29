@@ -12,7 +12,7 @@ const RepoDetails = ({watches, stars, forks}) => (
   </div>);
 
 RepoDetails.propTypes ={
-  watches: PropTypes.watches,
+  watches: PropTypes.number,
   stars: PropTypes.number,
   forks: PropTypes.number
 }
