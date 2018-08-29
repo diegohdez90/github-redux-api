@@ -17,8 +17,6 @@ function reducer(state = [], action) {
       return {...state, password };
     case FETCH_GET_TOKEN_SUCCESS:
       const { token } = action;
-      console.log(token);
-      
       return {...state, token };
     case FETCH_ACCOUNT_SUCCESS:
       const {account} = action;

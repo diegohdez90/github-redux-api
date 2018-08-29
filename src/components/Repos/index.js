@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Repo from '../Repo';
-const mapStateToProps = (state) => {
-  console.log(state);
-  
+const mapStateToProps = (state) => {  
   return {
     repos: state.reducer.repos,
     account: state.reducer.account 

@@ -104,7 +104,6 @@ export function watchRepoSuccess (message) {
 };
 
 export function watchRepoFailure (message) {
-  console.log(message);
   return {
     type: WATCH_REPO_FAILURE,
     message

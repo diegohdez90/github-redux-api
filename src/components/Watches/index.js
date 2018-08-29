@@ -36,8 +36,6 @@ class WatchesComponent extends React.Component {
 
   onWatchRepo(ev) {
     ev.preventDefault();
-    console.log('watching' , this.props.repo);
-    
     this.props.watchRepo(this.props.repo, this.props.githubAccount, this.props.token)
   }
 

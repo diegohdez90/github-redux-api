@@ -46,7 +46,6 @@ class FormComponent extends Component {
   onHandleSubmitGithubAccount(ev) {
     ev.preventDefault();
     this.props.updateGithubAccount(this.state.githubAccount);
-    console.log('state form', this.state);
     this.props.fetchUser(this.state.githubAccount, this.props.token);
     this.props.fetchUserRepos(this.state.githubAccount, this.props.token);
     this.setState({githubAccount: ''})

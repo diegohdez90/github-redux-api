@@ -18,8 +18,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(updatePasswordToken(password))
     },
     fetchUserToken: (username, password) => {
-      console.log('calling User Token', username, password);
-      
       dispatch(fetchGetToken(username, password))
     }
   }

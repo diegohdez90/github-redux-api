@@ -3,9 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { FETCH_GET_TOKEN, FETCH_GET_TOKEN_SUCCESS, FETCH_GET_TOKEN_FAILURE } from '../../utils/constants';
 import request from '../../utils/request';
 
-function* getUserToken(action){
-  console.log(action);
-  
+function* getUserToken(action){  
   const {username, password} = action;
   try {
     const buffer = new Buffer(`${username}:${password}`)

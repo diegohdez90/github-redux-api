@@ -38,7 +38,6 @@ class StarsComponent extends React.Component {
 
   onStarRepo(e) {
     e.preventDefault();
-    console.log('star to', this.props.repo);
     this.props.starRepo(this.props.repo, this.props.githubAccount,
     this.props.token );
   }
