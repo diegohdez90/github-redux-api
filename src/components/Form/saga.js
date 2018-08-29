@@ -9,7 +9,6 @@ import { FETCH_USER_REPOS,
 import request from '../../utils/request';
 
 function* fetchAccount(action) {
-  console.log('fetch github account', action);
   
   try {
     const {token} = action;

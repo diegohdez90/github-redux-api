@@ -15,8 +15,7 @@ function* getUserToken(action){
         Authorization: `Basic ${encodeAuth}`
       }
     })
-    console.log(token);
-    
+  
     yield put({type: FETCH_GET_TOKEN_SUCCESS, token: encodeAuth})
   } catch(error) {
     yield put({ type: FETCH_GET_TOKEN_FAILURE, message: error.message })

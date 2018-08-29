@@ -6,9 +6,7 @@ import { updateGithubAccount, fetchUserRepos, fetchAccount } from '../../actions
 import Button from '../../styledComponents/Button';
 import {connect} from 'react-redux';
 
-const mapStateToProps = (state) => {
-  console.log('mapStatetoProps Form', state);
-  
+const mapStateToProps = (state) => {  
   return {
     token: state.reducer.token
   }
