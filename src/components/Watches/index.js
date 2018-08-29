@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Octicon, { Eye } from '@githubprimer/octicons-react';
 import SpanGithub from '../../styledComponents/GithubComponent';
-import { watchRepo, watchRepoSuccess, watchRepoFailure } from '../../actions';
+import { watchRepoSuccess, watchRepoFailure } from '../../actions';
 
 const mapStateToProps = (state) => {
   return {
