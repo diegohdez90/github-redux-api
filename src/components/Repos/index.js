@@ -21,7 +21,7 @@ const Repos = ({repos, account}) => (repos) ? (
     </ul>
   </div>) : (<div>No repos</div>)
 
-Repos.propTyes = {
+Repos.propTypes = {
   account: PropTypes.object,
   repos: PropTypes.array
 }
