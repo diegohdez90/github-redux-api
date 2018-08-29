@@ -4,7 +4,8 @@ import { USERNAME,
   FETCH_GET_TOKEN_SUCCESS, 
   FETCH_USER_REPOS_SUCCESS,
   FETCH_ACCOUNT_SUCCESS,
-  GITHUB_ACCOUNT } from './utils/constants';
+  GITHUB_ACCOUNT, 
+  WATCH_REPO_SUCCESS} from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
@@ -28,6 +29,9 @@ function reducer(state = [], action) {
     case FETCH_USER_REPOS_SUCCESS:
       const {repos} = action;      
       return {...state, repos };
+    case WATCH_REPO_SUCCESS:
+      const {message} = action;
+      return {...state, message};
     default:
       return state;
   }

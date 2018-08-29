@@ -6,7 +6,9 @@ import { USERNAME,
   FETCH_ACCOUNT,
   FETCH_ACCOUNT_SUCCESS,
   GITHUB_ACCOUNT, 
-  FETCH_USER_REPOS } from "./utils/constants";
+  FETCH_USER_REPOS, 
+  WATCH_REPO,
+  WATCH_REPO_SUCCESS} from "./utils/constants";
 
 export function updateUsernameToken(username) {
   return {
@@ -66,14 +68,14 @@ export function fetchUserRepos (githubAccount, token) {
     type: FETCH_USER_REPOS,
     githubAccount, 
     token
-  }
+  };
 };
 
 export function addRepos(repos) {
   return {
     type: FETCH_USER_REPOS_SUCCESS,
     repos
-  }
+  };
 };
 
 export function getReposFailure(message) {
@@ -81,4 +83,20 @@ export function getReposFailure(message) {
     type: FETCH_USER_REPOS_FAILURE,
     message
   };
-}
+};
+
+export function watchRepo (repoToWatch, account, token) {
+  return {
+    type: WATCH_REPO,
+    repoToWatch,
+    account,
+    token
+  };
+};
+
+export function watchRepoSuccess (message) {
+  return {
+    type: WATCH_REPO_SUCCESS,
+    message
+  };
+};
