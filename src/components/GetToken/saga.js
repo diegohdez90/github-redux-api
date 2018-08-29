@@ -10,7 +10,7 @@ function* getUserToken(action){
   try {
     const buffer = new Buffer(`${username}:${password}`)
     const encodeAuth = buffer.toString('base64')
-    const token = yield call(request, 'https://api.github.com/user', {
+    yield call(request, 'https://api.github.com/user', {
       headers: {
         Authorization: `Basic ${encodeAuth}`
       }
