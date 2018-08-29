@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Forks from '../Forks';
 import Stars from '../Stars';
+import Watches from '../Watches';
 
-const RepoDetails = ({stars, forks}) => (
+const RepoDetails = ({watches, stars, forks}) => (
   <div>
+    <Watches watches={watches} />
     <Stars stars={stars} />
     <Forks forks={forks} />
   </div>);
 
 RepoDetails.propTypes ={
-  toggle: PropTypes.bool,
+  watches: PropTypes.watches,
   stars: PropTypes.number,
   forks: PropTypes.number
 }
