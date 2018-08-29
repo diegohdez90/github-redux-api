@@ -4,14 +4,15 @@ import Forks from '../Forks';
 import Stars from '../Stars';
 import Watches from '../Watches';
 
-const RepoDetails = ({watches, stars, forks}) => (
+const RepoDetails = ({watches, stars, forks, name}) => (
   <div>
-    <Watches watches={watches} />
+    <Watches watches={watches} repo={name}/>
     <Stars stars={stars} />
     <Forks forks={forks} />
   </div>);
 
 RepoDetails.propTypes ={
+  name: PropTypes.string,
   watches: PropTypes.number,
   stars: PropTypes.number,
   forks: PropTypes.number

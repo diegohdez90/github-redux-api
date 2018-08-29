@@ -5,7 +5,8 @@ import RepoDetails from '../RepoDetails';
 
 const Repo = ({repo}) => (<RepoElement>
     {repo.name}
-    <RepoDetails 
+    <RepoDetails
+      name={repo.name}
       watches={repo.watchers}
       forks={repo.forks}
       stars={repo.stargazers_count}
