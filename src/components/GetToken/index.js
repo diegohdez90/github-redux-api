@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Label from '../../styledComponents/Label';
-import Input from '../../styledComponents/Input';
-import Button from '../../styledComponents/Button';
+import Label from '../../styles/Label';
+import Input from '../../styles/Input';
+import Button from '../../styles/Button';
 import { updateUsernameToken,
   updatePasswordToken,
   fetchGetToken } from '../../actions';

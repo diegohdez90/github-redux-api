@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Input from '../../styledComponents/Input';
-import Label from '../../styledComponents/Label';
+import Input from '../../styles/Input';
+import Label from '../../styles/Label';
 import { updateGithubAccount, fetchUserRepos, fetchAccount } from '../../actions';
-import Button from '../../styledComponents/Button';
+import Button from '../../styles/Button';
 import {connect} from 'react-redux';
 
 const mapStateToProps = (state) => {  

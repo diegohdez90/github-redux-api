@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RepoElement from '../../styledComponents/RepoElement';
+import RepoElement from '../../styles/RepoElement';
 import RepoDetails from '../RepoDetails';
 
 const Repo = ({repo}) => (<RepoElement>
