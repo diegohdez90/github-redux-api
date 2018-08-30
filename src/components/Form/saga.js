@@ -22,7 +22,8 @@ function* fetchAccount(action) {
       method: 'GET',
       headers
     });
-    yield put({ type: FETCH_ACCOUNT_SUCCESS, account });
+    if ('name' in account) yield put({ type: FETCH_ACCOUNT_SUCCESS, account });
+    else yield put({ type: FETCH_ACCOUNT_FAILURE, message: account });
   } catch (error) {
     yield put({type: FETCH_ACCOUNT_FAILURE, message: error.message })
   }
@@ -41,7 +42,8 @@ function* fetchUserRepos (action) {
       method: 'GET',
       headers
     });
-    yield put({ type: FETCH_USER_REPOS_SUCCESS, repos});
+    if (Array.isArray(repos)) yield put({ type: FETCH_USER_REPOS_SUCCESS, repos });
+    else yield put({ type: FETCH_USER_REPOS_FAILURE, message: repos })
   } catch (error) {
     yield put({ type: FETCH_USER_REPOS_FAILURE, message: error.message})
   }

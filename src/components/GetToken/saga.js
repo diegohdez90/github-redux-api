@@ -8,15 +8,15 @@ function* getUserToken(action){
   try {
     const buffer = new Buffer(`${username}:${password}`)
     const encodeAuth = buffer.toString('base64')
-    yield call(request, 'https://api.github.com/user', {
+    const auth = yield call(request, 'https://api.github.com/user', {
       headers: {
         Authorization: `Basic ${encodeAuth}`
       }
-    })
-  
-    yield put({type: FETCH_GET_TOKEN_SUCCESS, token: encodeAuth})
+    })    
+    if ('name' in auth) yield put({ type: FETCH_GET_TOKEN_SUCCESS, token: encodeAuth });
+    else yield put({ type: FETCH_GET_TOKEN_FAILURE, message: auth });
   } catch(error) {
-    yield put({ type: FETCH_GET_TOKEN_FAILURE, message: error.message })
+    yield put({ type: FETCH_GET_TOKEN_FAILURE, message: error.message });
   }
 }
 

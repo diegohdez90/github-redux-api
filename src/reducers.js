@@ -40,8 +40,8 @@ function reducer(state = [], action) {
     case GITHUB_ACCOUNT:
       const {githubAccount} = action;
       return {...state, githubAccount};
-    case FETCH_USER_REPOS_SUCCESS:
-      const {repos} = action;      
+    case FETCH_USER_REPOS_SUCCESS:      
+      const {repos} = action;
       return {...state, repos };
     case CLEAR_MESSAGE:
       return{...state, message: ''};

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal } from '@material-ui/core';
+import { Modal, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '../../styles/Container'
 import Form from '../../components/Form';
@@ -70,7 +70,10 @@ class MainComponent extends React.Component {
         onClose={this.onHandlerModalClose}
       >
         <div style={getModalStyle()} className={classes.paper}>
-          {(this.props.message) ? ((this.props.message.statusText) ? this.props.message.statusText : 'Something went wrong'): ''}
+          <div>
+            {(this.props.message) ? ((this.props.message.statusText) ? this.props.message.statusText : (this.props.message.message) ? this.props.message.message : 'Something went wrong') : ''}
+          </div>
+          <Button onClick={this.onHandlerModalClose}>Close</Button>
         </div>
       </Modal>
     </Container>);

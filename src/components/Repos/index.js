@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const Repos = ({repos, account}) => (repos) ? (
+const Repos = ({repos, account}) => (Array.isArray(repos)) ? (
   <div>
     <h3>{account.name} has {account.public_repos} public repositories</h3>
     <ul>
