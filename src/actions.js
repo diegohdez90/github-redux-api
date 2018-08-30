@@ -13,7 +13,8 @@ import { USERNAME,
   STAR_REPO,
   STAR_REPO_SUCCESS,
   STAR_REPO_FAILURE,
-  CLEAR_MESSAGE} from "./utils/constants";
+  CLEAR_MESSAGE,
+  FETCH_GET_TOKEN_FAILURE} from "./utils/constants";
 
 export function clearMessage () {
   return {
@@ -48,6 +49,13 @@ export function getToken(token) {
     type: FETCH_GET_TOKEN_SUCCESS,
     token
   };
+}
+
+export function fetchGetTokenFailure(message) {
+  return {
+    type: FETCH_GET_TOKEN_FAILURE,
+    message
+  }
 }
 
 export function updateGithubAccount (githubAccount) {

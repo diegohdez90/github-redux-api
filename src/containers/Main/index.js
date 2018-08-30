@@ -70,7 +70,7 @@ class MainComponent extends React.Component {
         onClose={this.onHandlerModalClose}
       >
         <div style={getModalStyle()} className={classes.paper}>
-          {(this.props.message) ? this.props.message.statusText: ''}
+          {(this.props.message) ? ((this.props.message.statusText) ? this.props.message.statusText : 'Something went wrong'): ''}
         </div>
       </Modal>
     </Container>);
