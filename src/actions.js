@@ -14,7 +14,10 @@ import { USERNAME,
   STAR_REPO_SUCCESS,
   STAR_REPO_FAILURE,
   CLEAR_MESSAGE,
-  FETCH_GET_TOKEN_FAILURE} from "./utils/constants";
+  FETCH_GET_TOKEN_FAILURE,
+  FETCH_STARRED_REPOS,
+  FETCH_STARRED_REPOS_SUCCESS,
+  FETCH_STARRED_REPOS_FAILURE} from "./utils/constants";
 
 export function clearMessage () {
   return {
@@ -79,6 +82,26 @@ export function fetchAccountSuccess (account) {
     account
   };
 }
+
+export function fetchStarredRepos () {
+  return {
+    type: FETCH_STARRED_REPOS
+  };
+};
+
+export function fetchStarredReposSuccess (starredRepos) {
+  return {
+    type: FETCH_STARRED_REPOS_SUCCESS,
+    starredRepos
+  };
+};
+
+export function fetchStarredReposFailure (message) {
+  return {
+    type: FETCH_STARRED_REPOS_FAILURE,
+    message
+  };
+};
 
 export function fetchUserRepos (githubAccount, token) {
   return {

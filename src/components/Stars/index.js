@@ -43,7 +43,7 @@ class StarsComponent extends React.Component {
   }
 
   render() {
-    return (<SpanGithub onClick={this.onStarRepo}>{this.props.stars}<Octicon icon={Star} size='medium' verticalAlign='middle' /></SpanGithub>)
+    return (<SpanGithub onClick={this.onStarRepo}>{(this.props.token) ? ((this.props.starred > -1) ? 'Unstar' : 'Star') : 'Star'} {this.props.stars}<Octicon icon={Star} size='medium' verticalAlign='middle' /></SpanGithub>)
   }
 }
 
@@ -51,6 +51,7 @@ const Stars = connect(mapStateToProps, mapDispatchToProps, null)(StarsComponent)
 
 StarsComponent.propTypes = {
   stars: PropTypes.number,
+  starred: PropTypes.number,
   repo: PropTypes.string,
   githubAccount: PropTypes.string,
   token: PropTypes.string

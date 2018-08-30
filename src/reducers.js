@@ -12,7 +12,9 @@ import { USERNAME,
   STAR_REPO_SUCCESS,
   STAR_REPO_FAILURE,
   CLEAR_MESSAGE,
-  FETCH_GET_TOKEN_FAILURE} from './utils/constants';
+  FETCH_GET_TOKEN_FAILURE,
+  FETCH_STARRED_REPOS_SUCCESS,
+  FETCH_STARRED_REPOS_FAILURE} from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
@@ -28,8 +30,12 @@ function reducer(state = [], action) {
     case FETCH_ACCOUNT_SUCCESS:
       const {account} = action;
       return {...state, account};
+    case FETCH_STARRED_REPOS_SUCCESS:
+      const {starredRepos} = action;
+      return {...state, starredRepos};
     case FETCH_GET_TOKEN_FAILURE:
     case FETCH_ACCOUNT_FAILURE:
+    case FETCH_STARRED_REPOS_FAILURE:
     case FETCH_USER_REPOS_FAILURE:
     case WATCH_REPO_SUCCESS:
     case WATCH_REPO_FAILURE:

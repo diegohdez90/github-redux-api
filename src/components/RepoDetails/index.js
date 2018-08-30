@@ -21,11 +21,11 @@ class RepoDetails extends React.Component {
     });
   }
   render () {
-    const { watches, stars, forks, name } = this.props;
+    const { watches, stars, starred, forks, name } = this.props;
     return (
       <div>
-        <Watches watches={watches} repo={name}/>
-        <Stars stars={stars} repo={name} />
+        <Watches watches={watches} repo={name} />
+        <Stars starred={starred} stars={stars} repo={name} />
         <Forks forks={forks} />
         <div onClick={() => this.toggleIssuesTable()}>
           {(this.state.toggleIssues) ? <Issues /> : <Title>Looking for Issues</Title> }
@@ -38,7 +38,9 @@ RepoDetails.propTypes ={
   name: PropTypes.string,
   watches: PropTypes.number,
   stars: PropTypes.number,
-  forks: PropTypes.number
+  forks: PropTypes.number,
+  id: PropTypes.number,
+  starred: PropTypes.number
 }
 
 export default RepoDetails;
