@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const Repos = ({repos, account}) => (Array.isArray(repos)) ? (
   <div>
-    <h3>{account.name} has {account.public_repos} public repositories</h3>
+    {(account) ? <h3>{account.name} has {account.public_repos} public repositories</h3> : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>)}
     <ul>
     {
       repos.map(repo => <Repo key={repo.id} repo={repo} />)
