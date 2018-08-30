@@ -1,3 +1,4 @@
+export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 export const USERNAME = "USERNAME";
 export const PASSWORD = "PASSWORD";
 export const TOKEN = "TOKEN"

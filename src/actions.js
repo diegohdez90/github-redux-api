@@ -12,7 +12,14 @@ import { USERNAME,
   WATCH_REPO_FAILURE,
   STAR_REPO,
   STAR_REPO_SUCCESS,
-  STAR_REPO_FAILURE} from "./utils/constants";
+  STAR_REPO_FAILURE,
+  CLEAR_MESSAGE} from "./utils/constants";
+
+export function clearMessage () {
+  return {
+    type: CLEAR_MESSAGE
+  }
+}
 
 export function updateUsernameToken(username) {
   return {

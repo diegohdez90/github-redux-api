@@ -5,7 +5,13 @@ import { USERNAME,
   FETCH_USER_REPOS_SUCCESS,
   FETCH_ACCOUNT_SUCCESS,
   GITHUB_ACCOUNT, 
-  WATCH_REPO_SUCCESS} from './utils/constants';
+  WATCH_REPO_SUCCESS,
+  FETCH_ACCOUNT_FAILURE,
+  WATCH_REPO_FAILURE,
+  FETCH_USER_REPOS_FAILURE,
+  STAR_REPO_SUCCESS,
+  STAR_REPO_FAILURE,
+  CLEAR_MESSAGE} from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
@@ -21,15 +27,22 @@ function reducer(state = [], action) {
     case FETCH_ACCOUNT_SUCCESS:
       const {account} = action;
       return {...state, account};
+    case FETCH_ACCOUNT_FAILURE:
+    case FETCH_USER_REPOS_FAILURE:
+    case WATCH_REPO_SUCCESS:
+    case WATCH_REPO_FAILURE:
+    case STAR_REPO_SUCCESS:
+    case STAR_REPO_FAILURE:
+      const {message} = action;
+      return {...state, message};
     case GITHUB_ACCOUNT:
       const {githubAccount} = action;
       return {...state, githubAccount};
     case FETCH_USER_REPOS_SUCCESS:
       const {repos} = action;      
       return {...state, repos };
-    case WATCH_REPO_SUCCESS:
-      const {message} = action;
-      return {...state, message};
+    case CLEAR_MESSAGE:
+      return{...state, message: ''};
     default:
       return state;
   }
