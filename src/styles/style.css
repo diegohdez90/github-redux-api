@@ -3,4 +3,11 @@
 body {
   margin: 0 auto;
   font-family: 'Titillium Web', sans-serif;
+  background-color: #eee;
+}
+
+
+div.no-repos > h3.no-repos-found{
+  text-align: center;
+  font-size: 1em;
 }
