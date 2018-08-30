@@ -6,6 +6,9 @@ body {
   background-color: #eee;
 }
 
+h6.show-repo-details {
+  cursor: pointer;
+}
 
 div.no-repos > h3.no-repos-found{
   text-align: center;

@@ -4,7 +4,6 @@ import Forks from '../Forks';
 import Stars from '../Stars';
 import Watches from '../Watches';
 import Issues from '../Issues';
-import Title from '../../styles/Title';
 
 class RepoDetails extends React.Component {
 
@@ -17,18 +16,22 @@ class RepoDetails extends React.Component {
 
   toggleIssuesTable () {
     this.setState({
-      toggleIssues: !this.state.toggleIssues
+      toggleIssues: true
     });
   }
   render () {
-    const { watches, stars, starred, forks, name } = this.props;
+    const { watches, stars, forks, name } = this.props;
     return (
       <div>
-        <Watches watches={watches} repo={name} />
-        <Stars starred={starred} stars={stars} repo={name} />
-        <Forks forks={forks} />
         <div onClick={() => this.toggleIssuesTable()}>
-          {(this.state.toggleIssues) ? <Issues /> : <Title>Looking for Issues</Title> }
+          {(this.state.toggleIssues) ? (
+            <div>
+              <Watches watches={watches} repo={name} />
+              <Stars stars={stars} repo={name} />
+              <Forks forks={forks} />
+              <Issues />
+            </div>
+          ) : <h6 className="show-repo-details">See repository details</h6> }
         </div>
       </div>);
   }
@@ -40,7 +43,6 @@ RepoDetails.propTypes ={
   stars: PropTypes.number,
   forks: PropTypes.number,
   id: PropTypes.number,
-  starred: PropTypes.number
 }
 
 export default RepoDetails;

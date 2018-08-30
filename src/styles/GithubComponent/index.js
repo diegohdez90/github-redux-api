@@ -5,6 +5,7 @@ const SpanGithub = styled.span`
   margin-left: 2%;
   padding: 1%;
   border-radius: 5%;
+  cursor: pointer;
 `;
 
 export default SpanGithub;

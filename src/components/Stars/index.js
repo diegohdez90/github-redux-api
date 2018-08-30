@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Octicon, { Star } from "@githubprimer/octicons-react";
 import SpanGithub from '../../styles/GithubComponent';
-import { starRepoSuccess, starRepoFailure } from '../../actions';
+import { starRepoSuccess, starRepoFailure, fetchStarredRepoFailure } from '../../actions';
  '../../actions';
 
 // user/starred/:owner/:repo
@@ -18,32 +18,90 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     starRepo: (repo, account, token) => {
+      // PUT /user/starred/:owner/:repo
       fetch(`https://api.github.com/user/starred/${account}/${repo}`, {
         method: 'PUT',
         headers: {
           Authorization: `Basic ${token}`
         }
       })
-        .then((message) => dispatch(starRepoSuccess(message)))
-        .catch(err => dispatch(starRepoFailure(err.message)))
-    }
+      .then((message) => dispatch(starRepoSuccess(message)))
+      .then(() => {
+
+      })
+      .catch(err => dispatch(starRepoFailure(err.message)))
+    },
+    unStarRepo: (repo, account, token) => {
+      fetch(`https://api.github.com/user/starred/${account}/${repo}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Basic ${token}`
+        }
+      })
+      .then((message) => dispatch(starRepoSuccess(message)))
+      .catch(err => dispatch(starRepoFailure(err.message)))
+    },
+    errorStarred: (message) => dispatch(fetchStarredRepoFailure(message))
   }
 }
 
 class StarsComponent extends React.Component { 
   constructor() {
     super()
-    this.onStarRepo = this.onStarRepo.bind(this);
+    this.state = {
+      starred: "Star"
+    };
+    this.onStarRepoEventHandler = this.onStarRepoEventHandler.bind(this);
+  }
+  
+  componentDidMount() {
+    console.log('did mount');
+    const { repo,
+      githubAccount,
+      token } = this.props;
+
+    fetch(`https://api.github.com/user/starred/${githubAccount}/${repo}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${token}`
+      }
+    })
+    .then((message) => {
+      console.log('message', message);
+      console.log('status', message.status);
+      if (message.status === 204) {
+        this.setState({
+          starred: "UnStar"
+        })
+      }
+    }).catch((err) => {
+      console.log('err', err);
+      
+      this.props.errorStarred(err.message);
+    });
   }
 
-  onStarRepo(e) {
+  onStarRepoEventHandler(e) {
     e.preventDefault();
-    this.props.starRepo(this.props.repo, this.props.githubAccount,
-    this.props.token );
+    if (this.state.starred === "Star") {
+      this.props.starRepo(this.props.repo, this.props.githubAccount, this.props.token); 
+      if (this.props.token) {
+        this.setState({
+          starred: 'UnStar'
+        });        
+      }
+    } else {
+      this.props.unStarRepo(this.props.repo, this.props.githubAccount, this.props.token);
+      if (this.props.token) {
+        this.setState({
+          starred: 'Star'
+        });        
+      }
+    }
   }
 
   render() {
-    return (<SpanGithub onClick={this.onStarRepo}>{(this.props.token) ? ((this.props.starred > -1) ? 'Unstar' : 'Star') : 'Star'} {this.props.stars}<Octicon icon={Star} size='medium' verticalAlign='middle' /></SpanGithub>)
+    return (<SpanGithub onClick={this.onStarRepoEventHandler}>{this.state.starred} {this.props.stars}<Octicon icon={Star} size='medium' verticalAlign='middle' /></SpanGithub>)
   }
 }
 
@@ -51,7 +109,6 @@ const Stars = connect(mapStateToProps, mapDispatchToProps, null)(StarsComponent)
 
 StarsComponent.propTypes = {
   stars: PropTypes.number,
-  starred: PropTypes.number,
   repo: PropTypes.string,
   githubAccount: PropTypes.string,
   token: PropTypes.string

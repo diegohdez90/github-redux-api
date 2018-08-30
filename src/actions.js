@@ -15,9 +15,9 @@ import { USERNAME,
   STAR_REPO_FAILURE,
   CLEAR_MESSAGE,
   FETCH_GET_TOKEN_FAILURE,
-  FETCH_STARRED_REPOS,
-  FETCH_STARRED_REPOS_SUCCESS,
-  FETCH_STARRED_REPOS_FAILURE} from "./utils/constants";
+  FETCH_STARRED_REPO,
+  FETCH_STARRED_REPO_SUCCESS,
+  FETCH_STARRED_REPO_FAILURE } from "./utils/constants";
 
 export function clearMessage () {
   return {
@@ -83,22 +83,22 @@ export function fetchAccountSuccess (account) {
   };
 }
 
-export function fetchStarredRepos () {
+export function fetchStarredRepo () {
   return {
-    type: FETCH_STARRED_REPOS
+    type: FETCH_STARRED_REPO
   };
 };
 
-export function fetchStarredReposSuccess (starredRepos) {
+export function fetchStarredRepoSuccess (message) {
   return {
-    type: FETCH_STARRED_REPOS_SUCCESS,
-    starredRepos
+    type: FETCH_STARRED_REPO_SUCCESS,
+    message
   };
 };
 
-export function fetchStarredReposFailure (message) {
+export function fetchStarredRepoFailure (message) {
   return {
-    type: FETCH_STARRED_REPOS_FAILURE,
+    type: FETCH_STARRED_REPO_FAILURE,
     message
   };
 };
@@ -159,6 +159,8 @@ export function starRepo (repoToStar, account, token) {
 };
 
 export function starRepoSuccess (message) {
+  console.log(message);
+  
   return {
     type: STAR_REPO_SUCCESS,
     message
