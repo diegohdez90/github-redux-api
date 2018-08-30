@@ -11,13 +11,13 @@ const mapStateToProps = (state) => {
 
 const Repos = ({repos, account}) => (repos) ? (
   <div>
-    {account.name} has {account.public_repos} public repositories
+    <h3>{account.name} has {account.public_repos} public repositories</h3>
     <ul>
     {
       repos.map(repo => <Repo key={repo.id} repo={repo} />)
     }
     </ul>
-  </div>) : (<div>No repos</div>)
+  </div>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>)
 
 Repos.propTypes = {
   account: PropTypes.object,

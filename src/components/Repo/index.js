@@ -4,7 +4,7 @@ import RepoElement from '../../styles/RepoElement';
 import RepoDetails from '../RepoDetails';
 
 const Repo = ({repo}) => (<RepoElement>
-    {repo.name}
+    <h4>{repo.name}</h4>
     <RepoDetails
       name={repo.name}
       watches={repo.watchers}
