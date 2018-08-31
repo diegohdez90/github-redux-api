@@ -12,27 +12,29 @@ class RepoDetails extends React.Component {
     this.state = {
       toggleIssues: false
     };
+    this.toggleDetails = this.toggleDetails.bind(this);
   }
 
-  toggleIssuesTable () {
+  toggleDetails () {
     this.setState({
-      toggleIssues: true
+      toggleIssues: !this.state.toggleIssues
     });
   }
+
   render () {
     const { watches, stars, forks, name } = this.props;
+    const details = (this.state.toggleIssues) ? (<div>
+      <Watches watches={watches} repo={name} />
+      <Stars stars={stars} repo={name} />
+      <Forks forks={forks} />
+      <Issues />
+    </div>) : null;
     return (
       <div>
-        <div onClick={() => this.toggleIssuesTable()}>
-          {(this.state.toggleIssues) ? (
-            <div>
-              <Watches watches={watches} repo={name} />
-              <Stars stars={stars} repo={name} />
-              <Forks forks={forks} />
-              <Issues />
-            </div>
-          ) : <h6 className="show-repo-details">See repository details</h6> }
+        <div onClick={() => this.toggleDetails()}>
+          <h6 className="show-repo-details">{(this.state.toggleIssues) ? 'Hide repository details' : 'See repository details'}</h6>
         </div>
+        {details}
       </div>);
   }
 }
