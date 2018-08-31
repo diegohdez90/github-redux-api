@@ -26,7 +26,7 @@ function reducer(state = [], action) {
       return {...state, password };
     case FETCH_GET_TOKEN_SUCCESS:
       const { token } = action;
-      return {...state, token , repos: [], githubAccount: '', account: null};
+      return {...state, token , repos: [], githubAccount: '', account: null, message: 'Auth token successfully'};
     case FETCH_ACCOUNT_SUCCESS:
       const {account} = action;
       return {...state, account};

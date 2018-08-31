@@ -71,7 +71,7 @@ class MainComponent extends React.Component {
       >
         <div style={getModalStyle()} className={classes.paper}>
           <div>
-            {(this.props.message) ? ((this.props.message.statusText) ? this.props.message.statusText : (this.props.message.message) ? this.props.message.message : 'Something went wrong') : ''}
+            {(this.props.message) ? ((this.props.message.statusText) ? this.props.message.statusText : (this.props.message.message) ? this.props.message.message : ((typeof this.props.message === 'string') ? this.props.message :'Something went wrong')) : ''}
           </div>
           <Button onClick={this.onHandlerModalClose}>Close</Button>
         </div>
