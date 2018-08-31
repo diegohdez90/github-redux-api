@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => {
           Authorization: `Basic ${token}`
         }
       })
-      .then((message) => dispatch(starRepoSuccess(message)))
+      .then(() => dispatch(starRepoSuccess(`UnStart ${repo} successfully`)))
       .catch(err => dispatch(starRepoFailure(err.message)))
     },
     errorStarred: (message) => dispatch(fetchStarredRepoFailure(message))

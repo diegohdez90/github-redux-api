@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
           Authorization: `Basic ${token}`
         }
       })
-      .then((message) => dispatch(watchRepoSuccess(message)))
+      .then(() => dispatch(watchRepoSuccess(`UnWatch ${repo} successfully`)))
       .catch(err => dispatch(watchRepoFailure(err.message)))
     },
     errorWatched: message => dispatch(watchRepoFailure(message))
