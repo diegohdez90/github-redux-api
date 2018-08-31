@@ -55,7 +55,6 @@ class StarsComponent extends React.Component {
   }
   
   componentDidMount() {
-    console.log('did mount');
     const { repo,
       githubAccount,
       token } = this.props;
@@ -67,16 +66,12 @@ class StarsComponent extends React.Component {
       }
     })
     .then((message) => {
-      console.log('message', message);
-      console.log('status', message.status);
       if (message.status === 204) {
         this.setState({
           starred: "UnStar"
         })
       }
     }).catch((err) => {
-      console.log('err', err);
-      
       this.props.errorStarred(err.message);
     });
   }

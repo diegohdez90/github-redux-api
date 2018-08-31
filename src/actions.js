@@ -159,8 +159,6 @@ export function starRepo (repoToStar, account, token) {
 };
 
 export function starRepoSuccess (message) {
-  console.log(message);
-  
   return {
     type: STAR_REPO_SUCCESS,
     message
