@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Octicon, { Star } from "@githubprimer/octicons-react";
 import SpanGithub from '../../styles/GithubComponent';
-import { starRepoSuccess, starRepoFailure, fetchStarredRepoFailure } from '../../actions';
+import { starRepoSuccess, starRepoFailure } from '../../actions';
  '../../actions';
 
 // user/starred/:owner/:repo
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
       .then(() => dispatch(starRepoSuccess(`UnStart ${repo} successfully`)))
       .catch(err => dispatch(starRepoFailure(err.message)))
     },
-    errorStarred: (message) => dispatch(fetchStarredRepoFailure(message))
+    errorStarred: (message) => dispatch(starRepoFailure(message))
   }
 }
 
@@ -72,7 +72,7 @@ class StarsComponent extends React.Component {
         })
       }
     }).catch((err) => {
-      this.props.errorStarred(err.message);
+      if (token) this.props.errorStarred(err.message);
     });
   }
 

@@ -59,15 +59,15 @@ class WatchesComponent extends React.Component {
       }
     })
     .then(message => {
-      console.log(message);
-      
       if (message.status === 200) {
         this.setState({
           watched: "unWatch"
         });
       }
     })
-    .catch(err => this.props.errorWatched(err.message))
+    .catch(err => {
+      if(token) this.props.errorWatched(err.message);
+    });
   }
 
   onWatchRepoEventHandler(ev) {
