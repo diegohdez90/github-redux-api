@@ -14,7 +14,9 @@ import { USERNAME,
   CLEAR_MESSAGE,
   FETCH_GET_TOKEN_FAILURE,
   FETCH_STARRED_REPO_SUCCESS,
-  FETCH_STARRED_REPO_FAILURE } from './utils/constants';
+  FETCH_STARRED_REPO_FAILURE, 
+  FORK_REPO_SUCCESS,
+  FORK_REPO_FAILURE} from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
@@ -39,6 +41,8 @@ function reducer(state = [], action) {
     case WATCH_REPO_FAILURE:
     case STAR_REPO_SUCCESS:
     case STAR_REPO_FAILURE:
+    case FORK_REPO_SUCCESS:
+    case FORK_REPO_FAILURE:
       const {message} = action;
       return {...state, message};
     case GITHUB_ACCOUNT:

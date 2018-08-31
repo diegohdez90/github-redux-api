@@ -17,7 +17,10 @@ import { USERNAME,
   FETCH_GET_TOKEN_FAILURE,
   FETCH_STARRED_REPO,
   FETCH_STARRED_REPO_SUCCESS,
-  FETCH_STARRED_REPO_FAILURE } from "./utils/constants";
+  FETCH_STARRED_REPO_FAILURE, 
+  FORK_REPO,
+  FORK_REPO_SUCCESS,
+  FORK_REPO_FAILURE} from "./utils/constants";
 
 export function clearMessage () {
   return {
@@ -168,6 +171,26 @@ export function starRepoSuccess (message) {
 export function starRepoFailure (message) {
   return {
     type: STAR_REPO_FAILURE,
+    message
+  };
+};
+
+export function forkRepo () {
+  return {
+    type: FORK_REPO
+  };
+};
+
+export function forkRepoSuccess (message) {
+  return {
+    type: FORK_REPO_SUCCESS,
+    message
+  };
+};
+
+export function forkRepoFailure (message) {
+  return {
+    type: FORK_REPO_FAILURE,
     message
   };
 };

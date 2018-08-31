@@ -26,8 +26,8 @@ class RepoDetails extends React.Component {
     const details = (this.state.toggleIssues) ? (<div>
       <Watches watches={watches} repo={name} />
       <Stars stars={stars} repo={name} />
-      <Forks forks={forks} />
-      <Issues />
+      <Forks forks={forks} repo={name} />
+      <Issues/>
     </div>) : null;
     return (
       <div>
