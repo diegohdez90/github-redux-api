@@ -23,7 +23,18 @@ const mapDispatchToProps = (dispatch) => {
       })
       .then((message) => dispatch(watchRepoSuccess(message)))
       .catch(err => dispatch(watchRepoFailure(err.message)))
-    }
+    },
+    unWatchRepo: (repo, account, token) => {
+      fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Basic ${token}`
+        }
+      })
+      .then((message) => dispatch(watchRepoSuccess(message)))
+      .catch(err => dispatch(watchRepoFailure(err.message)))
+    },
+    errorWatched: message => dispatch(watchRepoFailure(message))
   };
 };
 
@@ -31,16 +42,47 @@ class WatchesComponent extends React.Component {
 
   constructor(){
     super();
-    this.onWatchRepo = this.onWatchRepo.bind(this);
+    this.state = {
+      watched: "Watch"
+    };
+    this.onWatchRepoEventHandler = this.onWatchRepoEventHandler.bind(this);
   }
 
-  onWatchRepo(ev) {
+  componentDidMount () {
+    const { repo,
+      githubAccount: account,
+      token } = this.props;
+    fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${token}`
+      }
+    })
+    .then(message => {
+      console.log(message);
+      
+      if (message.status === 200) {
+        this.setState({
+          watched: "unWatch"
+        });
+      }
+    })
+    .catch(err => this.props.errorWatched(err.message))
+  }
+
+  onWatchRepoEventHandler(ev) {
     ev.preventDefault();
-    this.props.watchRepo(this.props.repo, this.props.githubAccount, this.props.token)
+    if (this.state.watched === "Watch") {
+      this.props.watchRepo(this.props.repo, this.props.githubAccount, this.props.token);
+      if (this.props.token) this.setState({ watched: 'UnWatch' });
+    } else {
+      this.props.unWatchRepo(this.props.repo, this.props.githubAccount, this.props.token);
+      if (this.props.token) this.setState({ watched: 'Watch'})
+    }
   }
 
   render() {
-    return (<SpanGithub onClick={this.onWatchRepo}>{this.props.watches}<Octicon icon={Eye} size='medium' verticalAlign='middle' /></SpanGithub>)
+    return (<SpanGithub onClick={this.onWatchRepoEventHandler}>{this.state.watched} {this.props.watches}<Octicon icon={Eye} size='medium' verticalAlign='middle' /></SpanGithub>)
   }
 }
 
@@ -51,7 +93,6 @@ WatchesComponent.propTypes = {
   watches: PropTypes.number,
   githubAccount: PropTypes.string,
   token: PropTypes.string,
-  watchRepo: PropTypes.func,
 };
 
 export default Watches;
