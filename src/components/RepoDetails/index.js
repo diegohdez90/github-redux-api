@@ -27,7 +27,7 @@ class RepoDetails extends React.Component {
       <Watches watches={watches} repo={name} />
       <Stars stars={stars} repo={name} />
       <Forks forks={forks} repo={name} />
-      <Issues/>
+      <Issues repo={name} />
     </div>) : null;
     return (
       <div>
@@ -39,12 +39,11 @@ class RepoDetails extends React.Component {
   }
 }
 
-RepoDetails.propTypes ={
+RepoDetails.propTypes = {
   name: PropTypes.string,
   watches: PropTypes.number,
   stars: PropTypes.number,
   forks: PropTypes.number,
-  id: PropTypes.number,
 }
 
 export default RepoDetails;
