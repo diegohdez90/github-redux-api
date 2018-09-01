@@ -20,7 +20,11 @@ import { USERNAME,
   FETCH_STARRED_REPO_FAILURE, 
   FORK_REPO,
   FORK_REPO_SUCCESS,
-  FORK_REPO_FAILURE} from "./utils/constants";
+  FORK_REPO_FAILURE,
+  FETCH_REPO_ISSUES,
+  FETCH_REPO_ISSUES_SUCCESS,
+  FETCH_REPO_ISSUES_FAILURE,
+  SET_FALSE_ISSUES} from "./utils/constants";
 
 export function clearMessage () {
   return {
@@ -191,6 +195,27 @@ export function forkRepoSuccess (message) {
 export function forkRepoFailure (message) {
   return {
     type: FORK_REPO_FAILURE,
+    message
+  };
+};
+
+export function fetchRepoIssues () {
+  return {
+    type: FETCH_REPO_ISSUES
+  };
+};
+
+export function fetchRepoIssuesSuccess (issues, repo) {
+  return {
+    type: FETCH_REPO_ISSUES_SUCCESS,
+    issues,
+    repo
+  };
+};
+
+export function fetchRepoIssuesFailure (message) {
+  return {
+    type: FETCH_REPO_ISSUES_FAILURE,
     message
   };
 };

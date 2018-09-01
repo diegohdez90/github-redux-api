@@ -16,7 +16,10 @@ import { USERNAME,
   FETCH_STARRED_REPO_SUCCESS,
   FETCH_STARRED_REPO_FAILURE, 
   FORK_REPO_SUCCESS,
-  FORK_REPO_FAILURE} from './utils/constants';
+  FORK_REPO_FAILURE,
+  FETCH_REPO_ISSUES_FAILURE,
+  FETCH_REPO_ISSUES_SUCCESS,
+  SET_FALSE_ISSUES} from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
@@ -43,6 +46,7 @@ function reducer(state = [], action) {
     case STAR_REPO_FAILURE:
     case FORK_REPO_SUCCESS:
     case FORK_REPO_FAILURE:
+    case FETCH_REPO_ISSUES_FAILURE:
       const {message} = action;
       return {...state, message};
     case GITHUB_ACCOUNT:
@@ -51,6 +55,13 @@ function reducer(state = [], action) {
     case FETCH_USER_REPOS_SUCCESS:      
       const {repos} = action;
       return {...state, repos };
+    case FETCH_REPO_ISSUES_SUCCESS:
+      const {issues, repo: aRepo} = action;
+      const index = state.repos.findIndex(repo => (repo.name) === aRepo);
+      const {repos : reposAccount} = state;
+      reposAccount[index].issues = issues;
+      console.log(reposAccount);
+      return {...state, repos: reposAccount, issues: true};
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:
