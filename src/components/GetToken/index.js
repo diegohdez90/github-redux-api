@@ -1,84 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Label from '../../styles/Label';
 import Input from '../../styles/Input';
 import Button from '../../styles/Button';
-import { updateUsernameToken,
-  updatePasswordToken,
-  fetchGetToken } from '../../actions';
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUsername: (username) => {
-      dispatch(updateUsernameToken(username))
-    },
-    updatePassword: (password) => {
-      dispatch(updatePasswordToken(password))
-    },
-    fetchUserToken: (username, password) => {
-      dispatch(fetchGetToken(username, password))
-    }
-  }
-}
-
-class GetTokenComponent extends React.Component {
-
-  constructor() {
-    super();
-
-    this.state = {
-      username: '',
-      password: ''
-    };
-
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onHandlerGetToken = this.onHandlerGetToken.bind(this);
-  }
-
-  onChangeUsername(ev) {
-    this.setState({
-      username: ev.target.value
-    });
-    this.props.updateUsername(ev.target.value);
-  }
-
-  onChangePassword(ev) {
-    this.setState({
-      password: ev.target.value
-    });
-    this.props.updatePassword(ev.target.value);
-  }
-
-  onHandlerGetToken(ev) {
-    ev.preventDefault();
-    this.props.fetchUserToken(this.state.username, this.state.password);
-  }
-
-  render () {
-    return (<form onSubmit={this.onHandlerGetToken}>
+const GetToken = ({
+  onChangeUsername,
+  onChangePassword,
+  onHandlerGetToken
+}) => (<form onSubmit={onHandlerGetToken}>
       <Label>
       Username: <Input
         name="username"
-        onChange={this.onChangeUsername}
+        onChange={onChangeUsername}
         />
       </Label>
       <Label>
         Password <Input
         type='password'
-        onChange={this.onChangePassword}
+        onChange={onChangePassword}
         />
       </Label>
       <Button>Get Token</Button>
-    </form>)
-  }
-}
+    </form>);
 
-const GetToken = connect(null, mapDispatchToProps)(GetTokenComponent);
-
-GetTokenComponent.propTypes = {
+GetToken.propTypes = {
   onChangeUsername: PropTypes.func,
   onChangePassword: PropTypes.func,
   onHandlerGetToken: PropTypes.func
