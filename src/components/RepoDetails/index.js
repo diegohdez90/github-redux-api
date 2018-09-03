@@ -13,26 +13,43 @@ class RepoDetails extends React.Component {
     };
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.repoOpen !== nextProps.name) {
+      this.setState({
+        toggleIssues: false,
+      });
+    } else {
+      this.setState({
+        toggleIssues: true,
+      });
+    }
+  }
+
   toggleDetails = () => {
     this.setState({
       toggleIssues: !this.state.toggleIssues,
     });
   }
 
-  componentWillUpdate (props, state) {
-    if (state.toggleIssues) this.props.onOpenRepoDetails(this.props.name);
-  }
   render () {
-    const { watches, stars, forks, name } = this.props;
-    const details = (this.state.toggleIssues) ? (<div>
+    const { watches, stars, forks, name, onStarRepoEventHandler, onOpenRepoDetails, repoOpen, isRepoOpen } = this.props;
+    const details = (this.state.toggleIssues && repoOpen) ? (<div>
       <Watches watches={watches} repo={name} />
-      <Stars stars={stars} repo={name} />
+      <Stars
+        stars={stars}
+        repo={name}
+        onStarRepoEventHandler={onStarRepoEventHandler}
+      />
       <Forks forks={forks} repo={name} />
     </div>) : null;
+
     return (
       <div>
-        <div onClick={() => this.toggleDetails()}>
-          <h6 className="show-repo-details">{(this.state.toggleIssues) ? 'Hide repository details' : 'See repository details'}</h6>
+        <div onClick={() => {
+          this.toggleDetails();
+          onOpenRepoDetails(name, !isRepoOpen);
+        }}>
+          <h6 className="show-repo-details">{(this.state.toggleIssues && repoOpen) ? 'Hide repository details' : 'See repository details'}</h6>
         </div>
         {details}
       </div>);
@@ -45,6 +62,9 @@ RepoDetails.propTypes = {
   stars: PropTypes.number,
   forks: PropTypes.number,
   onOpenRepoDetails: PropTypes.func,
+  onStarRepoEventHandler: PropTypes.func,
+  repoOpen: PropTypes.string,
+  isRepoOpen: PropTypes.bool,
 };
 
 export default RepoDetails;

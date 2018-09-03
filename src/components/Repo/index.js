@@ -5,11 +5,15 @@ import RepoDetails from '../RepoDetails';
 
 const Repo = ({repo,
   onOpenRepoDetails,
+  isRepoOpen,
+  repoOpen,
 }) => (<RepoElement>
   <h4>{repo.name}</h4>
   <RepoDetails
     name={repo.name}
     onOpenRepoDetails={onOpenRepoDetails}
+    repoOpen={repoOpen}
+    isRepoOpen={isRepoOpen}
     watches={repo.watchers}
     forks={repo.forks}
     stars={repo.stargazers_count}
@@ -20,6 +24,8 @@ const Repo = ({repo,
 Repo.propTypes = {
   repo: PropTypes.object,
   onOpenRepoDetails: PropTypes.func,
+  repoOpen: PropTypes.string,
+  isRepoOpen: PropTypes.bool,
 };
 
 export default Repo;

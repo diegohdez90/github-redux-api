@@ -13,7 +13,10 @@ import { clearMessage,
   fetchGetToken,
   updateGithubAccount,
   fetchAccount,
-  fetchUserRepos} from '../../actions';
+  fetchUserRepos,
+  starRepoSuccess,
+  starRepoFailure,
+  openRepoDetails} from '../../actions';
 
 const mapStateToProps = state => ({
   message: state.reducer.message,
@@ -21,6 +24,8 @@ const mapStateToProps = state => ({
   token: state.reducer.token,
   repos: state.reducer.repos,
   account: state.reducer.account,
+  detailsOpen: state.reducer.detailsOpen,
+  repoOpen: state.reducer.repoOpen,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -45,6 +50,35 @@ const mapDispatchToProps = dispatch => ({
   fetchUserRepos: (githubAccount, token) => {
     dispatch(fetchUserRepos(githubAccount, token));
   },
+  openDetails: (repo, toggle) => {
+    dispatch(openRepoDetails(repo, toggle));
+  },
+  starRepo: (repo, account, token) => {
+    // PUT /user/starred/:owner/:repo
+    fetch(`https://api.github.com/user/starred/${account}/${repo}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    })
+      .then(message => dispatch(starRepoSuccess(message)))
+      .then(() => {
+        console.log('success');
+      })
+      .catch(err => dispatch(starRepoFailure(err.message)));
+  },
+  unStarRepo: (repo, account, token) => {
+    fetch(`https://api.github.com/user/starred/${account}/${repo}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    })
+      .then(() => dispatch(starRepoSuccess(`UnStart ${repo} successfully`)))
+      .then(() => this.getStars(repo, account, token))
+      .catch(err => dispatch(starRepoFailure(err.message)));
+  },
+  errorStarred: message => dispatch(starRepoFailure(message)),
 });
 
 const styleComponent = {
@@ -121,10 +155,11 @@ class MainComponent extends React.Component {
     });
   }
 
-  onOpenRepoDetails (repo) {
-    console.log('toggle repo', repo);
+  onOpenRepoDetails = (repo, toggleOpen) => {
+    this.props.openDetails(repo, toggleOpen);
   }
-  onStarRepoEventHandler(e) {
+
+  onStarRepoEventHandler = e => {
     e.preventDefault();
     if (this.state.starred === 'Star') {
       this.props.starRepo(this.props.repo, this.props.githubAccount, this.props.token);
@@ -163,6 +198,9 @@ class MainComponent extends React.Component {
         repos={this.props.repos}
         account={this.props.account}
         onOpenRepoDetails={this.onOpenRepoDetails}
+        detailsOpen={this.props.detailsOpen}
+        repoOpen={this.props.repoOpen}
+        onStarRepoEventHandler={this.onStarRepoEventHandler}
       />
       <Modal
         aria-labelledby="modal-message"
@@ -196,6 +234,8 @@ MainComponent.propTypes = {
   fetchUserRepos: PropTypes.func,
   repos: PropTypes.array,
   account: PropTypes.object,
+  detailsOpen: PropTypes.bool,
+  repoOpen: PropTypes.string,
 };
 
 export default MainPage;
