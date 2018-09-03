@@ -1,10 +1,10 @@
-import { combineReducers }  from 'redux'
-import { USERNAME, 
-  PASSOWORD, 
-  FETCH_GET_TOKEN_SUCCESS, 
+import { combineReducers } from 'redux';
+import { USERNAME,
+  PASSOWORD,
+  FETCH_GET_TOKEN_SUCCESS,
   FETCH_USER_REPOS_SUCCESS,
   FETCH_ACCOUNT_SUCCESS,
-  GITHUB_ACCOUNT, 
+  GITHUB_ACCOUNT,
   WATCH_REPO_SUCCESS,
   FETCH_ACCOUNT_FAILURE,
   WATCH_REPO_FAILURE,
@@ -14,27 +14,22 @@ import { USERNAME,
   CLEAR_MESSAGE,
   FETCH_GET_TOKEN_FAILURE,
   FETCH_STARRED_REPO_SUCCESS,
-  FETCH_STARRED_REPO_FAILURE, 
+  FETCH_STARRED_REPO_FAILURE,
   FORK_REPO_SUCCESS,
   FORK_REPO_FAILURE,
   FETCH_REPO_ISSUES_FAILURE,
-  FETCH_REPO_ISSUES_SUCCESS,
-  SET_FALSE_ISSUES} from './utils/constants';
+} from './utils/constants';
 
 function reducer(state = [], action) {
   switch (action.type) {
     case USERNAME:
-      const { username } = action;
-      return {...state, username };
+      return {...state, username: action.username };
     case PASSOWORD:
-      const { password } = action;
-      return {...state, password };
+      return {...state, password: action.password };
     case FETCH_GET_TOKEN_SUCCESS:
-      const { token } = action;
-      return {...state, token , repos: [], githubAccount: '', account: null, message: 'Auth token successfully'};
+      return {...state, token: action.token , repos: [], githubAccount: '', account: null, message: 'Auth token successfully'};
     case FETCH_ACCOUNT_SUCCESS:
-      const {account} = action;
-      return {...state, account};
+      return {...state, account: action.account};
     case FETCH_GET_TOKEN_FAILURE:
     case FETCH_ACCOUNT_FAILURE:
     case FETCH_STARRED_REPO_SUCCESS:
@@ -47,21 +42,11 @@ function reducer(state = [], action) {
     case FORK_REPO_SUCCESS:
     case FORK_REPO_FAILURE:
     case FETCH_REPO_ISSUES_FAILURE:
-      const {message} = action;
-      return {...state, message};
+      return {...state, message: action.message};
     case GITHUB_ACCOUNT:
-      const {githubAccount} = action;
-      return {...state, githubAccount};
-    case FETCH_USER_REPOS_SUCCESS:      
-      const {repos} = action;
-      return {...state, repos };
-    case FETCH_REPO_ISSUES_SUCCESS:
-      const {issues, repo: aRepo} = action;
-      const index = state.repos.findIndex(repo => (repo.name) === aRepo);
-      const {repos : reposAccount} = state;
-      reposAccount[index].issues = issues;
-      console.log(reposAccount);
-      return {...state, repos: reposAccount, issues: true};
+      return { ...state, githubAccount: action.githubAccount};
+    case FETCH_USER_REPOS_SUCCESS:
+      return {...state, repos: action.repos };
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:

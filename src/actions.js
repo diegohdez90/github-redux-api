@@ -1,12 +1,12 @@
-import { USERNAME, 
-  PASSWORD, 
-  FETCH_GET_TOKEN, 
-  FETCH_GET_TOKEN_SUCCESS, 
-  FETCH_USER_REPOS_SUCCESS, 
+import { USERNAME,
+  PASSWORD,
+  FETCH_GET_TOKEN,
+  FETCH_GET_TOKEN_SUCCESS,
+  FETCH_USER_REPOS_SUCCESS,
   FETCH_ACCOUNT,
   FETCH_ACCOUNT_SUCCESS,
-  GITHUB_ACCOUNT, 
-  FETCH_USER_REPOS, 
+  GITHUB_ACCOUNT,
+  FETCH_USER_REPOS,
   WATCH_REPO,
   WATCH_REPO_SUCCESS,
   WATCH_REPO_FAILURE,
@@ -17,32 +17,32 @@ import { USERNAME,
   FETCH_GET_TOKEN_FAILURE,
   FETCH_STARRED_REPO,
   FETCH_STARRED_REPO_SUCCESS,
-  FETCH_STARRED_REPO_FAILURE, 
+  FETCH_STARRED_REPO_FAILURE,
   FORK_REPO,
   FORK_REPO_SUCCESS,
   FORK_REPO_FAILURE,
   FETCH_REPO_ISSUES,
   FETCH_REPO_ISSUES_SUCCESS,
   FETCH_REPO_ISSUES_FAILURE,
-  SET_FALSE_ISSUES} from "./utils/constants";
+  FETCH_USER_REPOS_FAILURE} from './utils/constants';
 
 export function clearMessage () {
   return {
-    type: CLEAR_MESSAGE
-  }
+    type: CLEAR_MESSAGE,
+  };
 }
 
 export function updateUsernameToken(username) {
   return {
     type: USERNAME,
-    username
+    username,
   };
 }
 
 export function updatePasswordToken(password) {
   return {
     type: PASSWORD,
-    password
+    password,
   };
 }
 
@@ -50,110 +50,110 @@ export function fetchGetToken(username, password) {
   return {
     type: FETCH_GET_TOKEN,
     username,
-    password
-  }
+    password,
+  };
 }
 
 export function getToken(token) {
   return {
     type: FETCH_GET_TOKEN_SUCCESS,
-    token
+    token,
   };
 }
 
 export function fetchGetTokenFailure(message) {
   return {
     type: FETCH_GET_TOKEN_FAILURE,
-    message
-  }
+    message,
+  };
 }
 
 export function updateGithubAccount (githubAccount) {
   return {
     type: GITHUB_ACCOUNT,
-    githubAccount
-  }
+    githubAccount,
+  };
 }
 
 export function fetchAccount (githubAccount, token) {
   return {
     type: FETCH_ACCOUNT,
     githubAccount,
-    token
+    token,
   };
 }
 
 export function fetchAccountSuccess (account) {
   return {
     type: FETCH_ACCOUNT_SUCCESS,
-    account
+    account,
   };
 }
 
 export function fetchStarredRepo () {
   return {
-    type: FETCH_STARRED_REPO
+    type: FETCH_STARRED_REPO,
   };
-};
+}
 
 export function fetchStarredRepoSuccess (message) {
   return {
     type: FETCH_STARRED_REPO_SUCCESS,
-    message
+    message,
   };
-};
+}
 
 export function fetchStarredRepoFailure (message) {
   return {
     type: FETCH_STARRED_REPO_FAILURE,
-    message
+    message,
   };
-};
+}
 
 export function fetchUserRepos (githubAccount, token) {
   return {
     type: FETCH_USER_REPOS,
-    githubAccount, 
-    token
+    githubAccount,
+    token,
   };
-};
+}
 
 export function addRepos(repos) {
   return {
     type: FETCH_USER_REPOS_SUCCESS,
-    repos
+    repos,
   };
-};
+}
 
 export function getReposFailure(message) {
   return {
     type: FETCH_USER_REPOS_FAILURE,
-    message
+    message,
   };
-};
+}
 
 export function watchRepo (repoToWatch, account, token) {
   return {
     type: WATCH_REPO,
     repoToWatch,
     account,
-    token
+    token,
   };
-};
+}
 
 export function watchRepoSuccess (message) {
   return {
     type: WATCH_REPO_SUCCESS,
-    message
+    message,
   };
-};
+}
 
 export function watchRepoFailure (message) {
   return {
     type: WATCH_REPO_FAILURE,
-    message
+    message,
   };
-};
+}
 
 
 export function starRepo (repoToStar, account, token) {
@@ -161,61 +161,61 @@ export function starRepo (repoToStar, account, token) {
     type: STAR_REPO,
     repoToStar,
     account,
-    token
+    token,
   };
-};
+}
 
 export function starRepoSuccess (message) {
   return {
     type: STAR_REPO_SUCCESS,
-    message
+    message,
   };
-};
+}
 
 export function starRepoFailure (message) {
   return {
     type: STAR_REPO_FAILURE,
-    message
+    message,
   };
-};
+}
 
 export function forkRepo () {
   return {
-    type: FORK_REPO
+    type: FORK_REPO,
   };
-};
+}
 
 export function forkRepoSuccess (message) {
   return {
     type: FORK_REPO_SUCCESS,
-    message
+    message,
   };
-};
+}
 
 export function forkRepoFailure (message) {
   return {
     type: FORK_REPO_FAILURE,
-    message
+    message,
   };
-};
+}
 
 export function fetchRepoIssues () {
   return {
-    type: FETCH_REPO_ISSUES
+    type: FETCH_REPO_ISSUES,
   };
-};
+}
 
 export function fetchRepoIssuesSuccess (issues, repo) {
   return {
     type: FETCH_REPO_ISSUES_SUCCESS,
     issues,
-    repo
+    repo,
   };
-};
+}
 
 export function fetchRepoIssuesFailure (message) {
   return {
     type: FETCH_REPO_ISSUES_FAILURE,
-    message
+    message,
   };
-};
+}

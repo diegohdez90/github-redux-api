@@ -22,7 +22,6 @@ class App extends React.Component {
         </Toolbar>
       </AppBar>
       <Main />
-
     </div>);
   }
 }
