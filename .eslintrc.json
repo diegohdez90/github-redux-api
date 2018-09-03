@@ -16,7 +16,7 @@
     }
   },
   "rules": {
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": ["error", "windows"],
     "quotes": ["error", "single"],
     "indent": [
       2,
@@ -32,15 +32,24 @@
     ],
     "arrow-parens": [
       "error",
-      "always"
+      "as-needed"
     ],
     "arrow-body-style": [
       "error",
       "as-needed"
     ],
+    "no-trailing-spaces": ["error", {
+      "skipBlankLines": false,
+      "ignoreComments": false
+    }],
+    "no-multi-spaces": "error",
     "no-console": 1,
     "handle-callback-err": 0,
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "react/jsx-key": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error",
+    "react/jsx-props-no-multi-spaces": "error"
   }
 }
