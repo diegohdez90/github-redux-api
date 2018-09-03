@@ -16,7 +16,7 @@
     }
   },
   "rules": {
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "indent": [
       2,
@@ -43,6 +43,8 @@
       "ignoreComments": false
     }],
     "no-multi-spaces": "error",
+    "no-case-declarations": "error",
+    "no-fallthrough": "error",
     "no-console": 1,
     "handle-callback-err": 0,
     "react/jsx-uses-react": "error",
