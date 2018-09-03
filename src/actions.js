@@ -24,7 +24,8 @@ import { USERNAME,
   FETCH_REPO_ISSUES,
   FETCH_REPO_ISSUES_SUCCESS,
   FETCH_REPO_ISSUES_FAILURE,
-  FETCH_USER_REPOS_FAILURE} from './utils/constants';
+  FETCH_USER_REPOS_FAILURE,
+  OPEN_PROJECT_DETAILS} from './utils/constants';
 
 export function clearMessage () {
   return {
@@ -90,23 +91,11 @@ export function fetchAccountSuccess (account) {
   };
 }
 
-export function fetchStarredRepo () {
+export function openRepoDetails (repo, toggle) {
   return {
-    type: FETCH_STARRED_REPO,
-  };
-}
-
-export function fetchStarredRepoSuccess (message) {
-  return {
-    type: FETCH_STARRED_REPO_SUCCESS,
-    message,
-  };
-}
-
-export function fetchStarredRepoFailure (message) {
-  return {
-    type: FETCH_STARRED_REPO_FAILURE,
-    message,
+    type: OPEN_PROJECT_DETAILS,
+    repo,
+    toggle,
   };
 }
 
@@ -128,6 +117,26 @@ export function addRepos(repos) {
 export function getReposFailure(message) {
   return {
     type: FETCH_USER_REPOS_FAILURE,
+    message,
+  };
+}
+
+export function fetchStarredRepo() {
+  return {
+    type: FETCH_STARRED_REPO,
+  };
+}
+
+export function fetchStarredRepoSuccess(message) {
+  return {
+    type: FETCH_STARRED_REPO_SUCCESS,
+    message,
+  };
+}
+
+export function fetchStarredRepoFailure(message) {
+  return {
+    type: FETCH_STARRED_REPO_FAILURE,
     message,
   };
 }

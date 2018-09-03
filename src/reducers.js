@@ -18,9 +18,12 @@ import { USERNAME,
   FORK_REPO_SUCCESS,
   FORK_REPO_FAILURE,
   FETCH_REPO_ISSUES_FAILURE,
+  OPEN_PROJECT_DETAILS,
 } from './utils/constants';
 
-function reducer(state = [], action) {
+function reducer(state = {
+  detailsOpen: false,
+}, action) {
   switch (action.type) {
     case USERNAME:
       return {...state, username: action.username };
@@ -47,6 +50,8 @@ function reducer(state = [], action) {
       return { ...state, githubAccount: action.githubAccount};
     case FETCH_USER_REPOS_SUCCESS:
       return {...state, repos: action.repos };
+    case OPEN_PROJECT_DETAILS:
+      return {...state, detailsOpen: action.toggle, repoOpen: action.repo};
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:
