@@ -4,7 +4,7 @@
   "description": "A simple React-Redux project using Github API v3",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --config ./webpack.dev.js --watch",
+    "start:dev": "webpack-dev-server --config ./webpack.dev.js --watch",
     "build": "webpack --config ./webpack.prod.js",
     "lint": "eslint ."
   },
