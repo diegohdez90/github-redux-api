@@ -3,61 +3,56 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Container from '../../styles/Container'
+import Container from '../../styles/Container';
 import Form from '../../components/Form';
 import GetToken from '../../components/GetToken';
 import Repos from '../../components/Repos';
-import { clearMessage, 
-  updateUsernameToken, 
-  updatePasswordToken, 
-  fetchGetToken, 
-  updateGithubAccount, 
-  fetchAccount, 
+import { clearMessage,
+  updateUsernameToken,
+  updatePasswordToken,
+  fetchGetToken,
+  updateGithubAccount,
+  fetchAccount,
   fetchUserRepos} from '../../actions';
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    message: state.reducer.message,
-    owner: state.reducer.githubAccount,
-    token: state.reducer.token,
-    repos: state.reducer.repos,
-    account: state.reducer.account 
-  }
-}
+const mapStateToProps = state => ({
+  message: state.reducer.message,
+  owner: state.reducer.githubAccount,
+  token: state.reducer.token,
+  repos: state.reducer.repos,
+  account: state.reducer.account,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearMessage: () => {
-      dispatch(clearMessage())
-    },
-    updateUsername: (username) => {
-      dispatch(updateUsernameToken(username))
-    },
-    updatePassword: (password) => {
-      dispatch(updatePasswordToken(password))
-    },
-    fetchUserToken: (username, password) => {
-      dispatch(fetchGetToken(username, password))
-    },
-    updateGithubAccount: githubAccount => {
-      dispatch(updateGithubAccount(githubAccount))
-    },
-    fetchUser: (githubAccount, token) => {
-      dispatch(fetchAccount(githubAccount, token))
-    },
-    fetchUserRepos: (githubAccount, token) => {
-      dispatch(fetchUserRepos(githubAccount, token))
-    }
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  clearMessage: () => {
+    dispatch(clearMessage());
+  },
+  updateUsername: username => {
+    dispatch(updateUsernameToken(username));
+  },
+  updatePassword: password => {
+    dispatch(updatePasswordToken(password));
+  },
+  fetchUserToken: (username, password) => {
+    dispatch(fetchGetToken(username, password));
+  },
+  updateGithubAccount: githubAccount => {
+    dispatch(updateGithubAccount(githubAccount));
+  },
+  fetchUser: (githubAccount, token) => {
+    dispatch(fetchAccount(githubAccount, token));
+  },
+  fetchUserRepos: (githubAccount, token) => {
+    dispatch(fetchUserRepos(githubAccount, token));
+  },
+});
 
-const styles = {
+const styleComponent = {
   modal: {
     top: 50,
     left: 50,
-  }
-}
+  },
+};
 
 const styles = theme => ({
   paper: {
@@ -77,7 +72,7 @@ class MainComponent extends React.Component {
       open: false,
       username: '',
       password: '',
-      owner: ''
+      owner: '',
     };
   }
 
@@ -88,47 +83,69 @@ class MainComponent extends React.Component {
     });
   }
 
-  onChangeUsername = (ev) => {
+  onChangeUsername = ev => {
     this.setState({
-      username: ev.target.value
+      username: ev.target.value,
     });
     this.props.updateUsername(ev.target.value);
   }
 
-  onChangePassword = (ev) => {
+  onChangePassword = ev => {
     this.setState({
-      password: ev.target.value
+      password: ev.target.value,
     });
     this.props.updatePassword(ev.target.value);
   }
 
-  onHandlerGetToken = (ev) => {
+  onHandlerGetToken = ev => {
     ev.preventDefault();
     this.props.fetchUserToken(this.state.username, this.state.password);
     this.setState({
       username: '',
-      password: ''
+      password: '',
     });
   }
 
-  onChangeGithubAccount = (ev) => {
-    this.setState({ owner: ev.target.value })
+  onChangeGithubAccount = ev => {
+    this.setState({ owner: ev.target.value });
   }
 
-  onHandleSubmitGithubAccount = (ev) => {
+  onHandleSubmitGithubAccount = ev => {
     ev.preventDefault();
 
     this.props.updateGithubAccount(this.state.owner);
     this.props.fetchUser(this.state.owner, this.props.token);
     this.props.fetchUserRepos(this.state.owner, this.props.token);
     this.setState({
-      owner: ''
+      owner: '',
     });
+  }
+
+  onOpenRepoDetails (repo) {
+    console.log('toggle repo', repo);
+  }
+  onStarRepoEventHandler(e) {
+    e.preventDefault();
+    if (this.state.starred === 'Star') {
+      this.props.starRepo(this.props.repo, this.props.githubAccount, this.props.token);
+      if (this.props.token) {
+        this.setState({
+          starred: 'UnStar',
+        });
+      }
+    } else {
+      this.props.unStarRepo(this.props.repo, this.props.githubAccount, this.props.token);
+      if (this.props.token) {
+        this.setState({
+          starred: 'Star',
+        });
+      }
+    }
   }
 
   render() {
     const {classes} = this.props;
-    const {modal : modalStyle} = styles;
+    const {modal : modalStyle} = styleComponent;
     return (<Container>
       <GetToken
         username={this.state.username}
@@ -137,7 +154,7 @@ class MainComponent extends React.Component {
         onChangePassword={this.onChangePassword}
         onHandlerGetToken={this.onHandlerGetToken}
       />
-      <Form 
+      <Form
         githubOwner={this.state.owner}
         onChangeGithubAccount={this.onChangeGithubAccount}
         onHandleSubmitGithubAccount={this.onHandleSubmitGithubAccount}
@@ -145,6 +162,7 @@ class MainComponent extends React.Component {
       <Repos
         repos={this.props.repos}
         account={this.props.account}
+        onOpenRepoDetails={this.onOpenRepoDetails}
       />
       <Modal
         aria-labelledby="modal-message"
@@ -163,7 +181,7 @@ class MainComponent extends React.Component {
   }
 }
 
-const Main = connect(mapStateToProps, mapDispatchToProps, null)(MainComponent)
+const Main = connect(mapStateToProps, mapDispatchToProps, null)(MainComponent);
 
 const MainPage = withStyles(styles)(Main);
 
@@ -177,7 +195,7 @@ MainComponent.propTypes = {
   fetchUser: PropTypes.func,
   fetchUserRepos: PropTypes.func,
   repos: PropTypes.array,
-  account: PropTypes.object
+  account: PropTypes.object,
 };
 
 export default MainPage;

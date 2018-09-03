@@ -7,27 +7,27 @@ import Button from '../../styles/Button';
 const GetToken = ({
   onChangeUsername,
   onChangePassword,
-  onHandlerGetToken
+  onHandlerGetToken,
 }) => (<form onSubmit={onHandlerGetToken}>
-      <Label>
-      Username: <Input
-        name="username"
-        onChange={onChangeUsername}
-        />
-      </Label>
-      <Label>
-        Password <Input
-        type='password'
-        onChange={onChangePassword}
-        />
-      </Label>
-      <Button>Get Token</Button>
-    </form>);
+  <Label>
+  Username: <Input
+      name="username"
+      onChange={onChangeUsername}
+    />
+  </Label>
+  <Label>
+    Password <Input
+      type='password'
+      onChange={onChangePassword}
+    />
+  </Label>
+  <Button>Get Token</Button>
+</form>);
 
 GetToken.propTypes = {
   onChangeUsername: PropTypes.func,
   onChangePassword: PropTypes.func,
-  onHandlerGetToken: PropTypes.func
+  onHandlerGetToken: PropTypes.func,
 };
 
 export default GetToken;
