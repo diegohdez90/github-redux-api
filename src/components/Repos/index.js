@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
 import Repo from '../Repo';
 
 const Repos = ({repos,
+  pageSize,
+  onSetPage,
   account,
   owner,
   token,
@@ -34,6 +37,21 @@ const Repos = ({repos,
         />)
       }
     </ul>
+    <ReactPaginate
+      containerClassName={'pagination'}
+      subContainerClassName={'pages pagination'}
+      activeClassName={'active'}
+      pageCount={Math.ceil(account.public_repos / pageSize)}
+      initialPage={0}
+      pageRangeDisplayed={5}
+      marginPagesDisplayed={2}
+      onPageChange={
+        page => {
+          page.selected ++;
+          onSetPage(page.selected);
+        }
+      }
+    />
   </div>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>);
 
 Repos.propTypes = {
@@ -49,6 +67,9 @@ Repos.propTypes = {
   onForkRepoEventHandler: PropTypes.func,
   detailsOpen: PropTypes.bool,
   repoOpen: PropTypes.string,
+  page: PropTypes.number,
+  pageSize: PropTypes.number,
+  onSetPage: PropTypes.func,
 };
 
 export default Repos;

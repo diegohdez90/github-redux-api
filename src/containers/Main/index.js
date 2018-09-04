@@ -22,6 +22,7 @@ import { clearMessage,
   watchRepoFailure,
   forkRepoSuccess,
   forkRepoFailure,
+  setPage,
 } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -32,6 +33,8 @@ const mapStateToProps = state => ({
   account: state.reducer.account,
   detailsOpen: state.reducer.detailsOpen,
   repoOpen: state.reducer.repoOpen,
+  pageSize: state.reducer.pageSize,
+  page: state.reducer.page,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -53,9 +56,10 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: (githubAccount, token) => {
     dispatch(fetchAccount(githubAccount, token));
   },
-  fetchUserRepos: (githubAccount, token) => {
-    dispatch(fetchUserRepos(githubAccount, token));
+  fetchUserRepos: (githubAccount, token, page) => {
+    dispatch(fetchUserRepos(githubAccount, token, page));
   },
+  setPage: number => dispatch(setPage(number)),
   openDetails: (repo, toggle) => {
     dispatch(openRepoDetails(repo, toggle));
   },
@@ -156,6 +160,11 @@ class MainComponent extends React.Component {
     };
   }
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.page !== this.props.page) {
+      this.props.fetchUserRepos(this.props.owner, this.props.token, this.props.page);
+    }
+  }
   onHandlerModalClose = () => {
     this.props.clearMessage();
     this.setState({
@@ -195,10 +204,14 @@ class MainComponent extends React.Component {
 
     this.props.updateGithubAccount(this.state.owner);
     this.props.fetchUser(this.state.owner, this.props.token);
-    this.props.fetchUserRepos(this.state.owner, this.props.token);
+    this.props.fetchUserRepos(this.state.owner, this.props.token, 1);
     this.setState({
       owner: '',
     });
+  }
+
+  onSetPage = number => {
+    this.props.setPage(number);
   }
 
   onOpenRepoDetails = (repo, toggleOpen) => {
@@ -251,6 +264,9 @@ class MainComponent extends React.Component {
         account={this.props.account}
         token={this.props.token}
         owner={this.props.owner}
+        pageSize={this.props.pageSize}
+        page={this.props.page}
+        onSetPage={this.onSetPage}
         onOpenRepoDetails={this.onOpenRepoDetails}
         detailsOpen={this.props.detailsOpen}
         repoOpen={this.props.repoOpen}

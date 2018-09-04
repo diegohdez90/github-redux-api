@@ -42,14 +42,14 @@ function* fetchAccount(action) {
 
 function* fetchUserRepos(action) {
   try {
-    const { token } = action;
+    const { githubAccount, token, page } = action;
     let headers = {};
     if (token) {
       headers = {
         Authorization: `Basic ${token}`,
       };
     }
-    const repos = yield call(request, `https://api.github.com/users/${action.githubAccount}/repos`, {
+    const repos = yield call(request, `https://api.github.com/users/${githubAccount}/repos?page=${page}`, {
       method: 'GET',
       headers,
     });
