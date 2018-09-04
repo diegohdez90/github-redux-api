@@ -32,15 +32,42 @@ class RepoDetails extends React.Component {
   }
 
   render () {
-    const { watches, stars, forks, name, onStarRepoEventHandler, onOpenRepoDetails, repoOpen, isRepoOpen } = this.props;
+    const { watches,
+      stars,
+      forks,
+      name,
+      owner,
+      token,
+      onStarRepoEventHandler,
+      onErrorStarEventHandler,
+      onWatchRepoEventHandler,
+      onErrorWatchEventHandler,
+      onForkRepoEventHandler,
+      onOpenRepoDetails,
+      repoOpen,
+      isRepoOpen } = this.props;
     const details = (this.state.toggleIssues && repoOpen) ? (<div>
-      <Watches watches={watches} repo={name} />
+      <Watches
+        watches={watches}
+        repo={name}
+        owner={owner}
+        token={token}
+        onWatchRepoEventHandler={onWatchRepoEventHandler}
+        onErrorWatchEventHandler={onErrorWatchEventHandler}
+      />
       <Stars
         stars={stars}
         repo={name}
+        owner={owner}
+        token={token}
         onStarRepoEventHandler={onStarRepoEventHandler}
+        onErrorStarEventHandler={onErrorStarEventHandler}
       />
-      <Forks forks={forks} repo={name} />
+      <Forks
+        forks={forks}
+        repo={name}
+        onForkRepoEventHandler={onForkRepoEventHandler}
+      />
     </div>) : null;
 
     return (
@@ -58,11 +85,17 @@ class RepoDetails extends React.Component {
 
 RepoDetails.propTypes = {
   name: PropTypes.string,
+  owner: PropTypes.string,
+  token: PropTypes.string,
   watches: PropTypes.number,
   stars: PropTypes.number,
   forks: PropTypes.number,
   onOpenRepoDetails: PropTypes.func,
   onStarRepoEventHandler: PropTypes.func,
+  onErrorStarEventHandler: PropTypes.func,
+  onWatchRepoEventHandler: PropTypes.func,
+  onErrorWatchEventHandler: PropTypes.func,
+  onForkRepoEventHandler: PropTypes.func,
   repoOpen: PropTypes.string,
   isRepoOpen: PropTypes.bool,
 };

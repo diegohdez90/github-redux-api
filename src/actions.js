@@ -25,7 +25,10 @@ import { USERNAME,
   FETCH_REPO_ISSUES_SUCCESS,
   FETCH_REPO_ISSUES_FAILURE,
   FETCH_USER_REPOS_FAILURE,
-  OPEN_PROJECT_DETAILS} from './utils/constants';
+  OPEN_PROJECT_DETAILS,
+  FETCH_UPDATE_REPO_SUCCESS,
+  FETCH_UPDATE_REPO_FAILURE,
+  FETCH_UPDATE_REPO} from './utils/constants';
 
 export function clearMessage () {
   return {
@@ -137,6 +140,29 @@ export function fetchStarredRepoSuccess(message) {
 export function fetchStarredRepoFailure(message) {
   return {
     type: FETCH_STARRED_REPO_FAILURE,
+    message,
+  };
+}
+
+export function fetchUpdateRepo(repo, owner, token) {
+  return {
+    type: FETCH_UPDATE_REPO,
+    repo,
+    owner,
+    token,
+  };
+}
+
+export function updateRepoSuccess(repo) {
+  return {
+    type: FETCH_UPDATE_REPO_SUCCESS,
+    repo,
+  };
+}
+
+export function updateRepoFailure(message){
+  return {
+    type: FETCH_UPDATE_REPO_FAILURE,
     message,
   };
 }

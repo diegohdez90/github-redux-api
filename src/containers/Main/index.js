@@ -16,7 +16,13 @@ import { clearMessage,
   fetchUserRepos,
   starRepoSuccess,
   starRepoFailure,
-  openRepoDetails} from '../../actions';
+  openRepoDetails,
+  fetchUpdateRepo,
+  watchRepoSuccess,
+  watchRepoFailure,
+  forkRepoSuccess,
+  forkRepoFailure,
+} from '../../actions';
 
 const mapStateToProps = state => ({
   message: state.reducer.message,
@@ -53,6 +59,7 @@ const mapDispatchToProps = dispatch => ({
   openDetails: (repo, toggle) => {
     dispatch(openRepoDetails(repo, toggle));
   },
+  // user/starred/:owner/:repo
   starRepo: (repo, account, token) => {
     // PUT /user/starred/:owner/:repo
     fetch(`https://api.github.com/user/starred/${account}/${repo}`, {
@@ -62,9 +69,7 @@ const mapDispatchToProps = dispatch => ({
       },
     })
       .then(message => dispatch(starRepoSuccess(message)))
-      .then(() => {
-        console.log('success');
-      })
+      .then(() => dispatch(fetchUpdateRepo(repo,account,token)))
       .catch(err => dispatch(starRepoFailure(err.message)));
   },
   unStarRepo: (repo, account, token) => {
@@ -75,10 +80,51 @@ const mapDispatchToProps = dispatch => ({
       },
     })
       .then(() => dispatch(starRepoSuccess(`UnStart ${repo} successfully`)))
-      .then(() => this.getStars(repo, account, token))
+      .then(() => dispatch(fetchUpdateRepo(repo, account, token)))
       .catch(err => dispatch(starRepoFailure(err.message)));
   },
   errorStarred: message => dispatch(starRepoFailure(message)),
+  watchRepo: (repo, account, token) => {
+    fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    })
+      .then(message => dispatch(watchRepoSuccess(message)))
+      .then(() => dispatch(fetchUpdateRepo(repo, account, token)))
+      .catch(err => dispatch(watchRepoFailure(err.message)));
+  },
+  unWatchRepo: (repo, account, token) => {
+    fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    })
+      .then(() => dispatch(watchRepoSuccess(`UnWatch ${repo} successfully`)))
+      .then(() => dispatch(fetchUpdateRepo(repo, account, token)))
+      .catch(err => dispatch(watchRepoFailure(err.message)));
+  },
+  errorWatched: message => dispatch(watchRepoFailure(message)),
+  // /repos/:owner/:repo/forks
+  postFork: (repo, account, token) => {
+    fetch(`https://api.github.com/repos/${account}/${repo}/forks`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    })
+      .then(message => {
+        if (message.status === 202) {
+          dispatch(forkRepoSuccess(message));
+        }
+      })
+      .then(() => dispatch(fetchUpdateRepo(repo, account, token)))
+      .catch(err => {
+        dispatch(forkRepoFailure(err.message));
+      });
+  },
 });
 
 const styleComponent = {
@@ -159,23 +205,29 @@ class MainComponent extends React.Component {
     this.props.openDetails(repo, toggleOpen);
   }
 
-  onStarRepoEventHandler = e => {
-    e.preventDefault();
-    if (this.state.starred === 'Star') {
-      this.props.starRepo(this.props.repo, this.props.githubAccount, this.props.token);
-      if (this.props.token) {
-        this.setState({
-          starred: 'UnStar',
-        });
-      }
-    } else {
-      this.props.unStarRepo(this.props.repo, this.props.githubAccount, this.props.token);
-      if (this.props.token) {
-        this.setState({
-          starred: 'Star',
-        });
-      }
-    }
+  onStarRepoEventHandler = starred => {
+    const { repoOpen: repo, owner, token } = this.props;
+    if (starred) this.props.starRepo(repo, owner, token);
+    else this.props.unStarRepo(repo, owner, token);
+  }
+
+  onErrorStarEventHandler = message => {
+    this.props.errorStarred(message);
+  }
+
+  onWatchRepoEventHandler = watched => {
+    const {repoOpen: repo, owner, token } = this.props;
+    if (watched) this.props.watchRepo(repo, owner, token);
+    else this.props.unWatchRepo(repo, owner, token);
+  }
+
+  onErrorWatchEventHandler = message => {
+    this.props.errorWatched(message);
+  }
+
+  onForkRepoEventHandler = () => {
+    const {repoOpen: repo, owner, token} = this.props;
+    this.props.postFork(repo, owner, token);
   }
 
   render() {
@@ -197,10 +249,16 @@ class MainComponent extends React.Component {
       <Repos
         repos={this.props.repos}
         account={this.props.account}
+        token={this.props.token}
+        owner={this.props.owner}
         onOpenRepoDetails={this.onOpenRepoDetails}
         detailsOpen={this.props.detailsOpen}
         repoOpen={this.props.repoOpen}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
+        onErrorStarEventHandler={this.onErrorStarEventHandler}
+        onWatchRepoEventHandler={this.onWatchRepoEventHandler}
+        onErrorWatchEventHandler={this.onErrorWatchEventHandler}
+        onForkRepoEventHandler={this.onForkRepoEventHandler}
       />
       <Modal
         aria-labelledby="modal-message"

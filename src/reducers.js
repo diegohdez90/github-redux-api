@@ -19,6 +19,7 @@ import { USERNAME,
   FORK_REPO_FAILURE,
   FETCH_REPO_ISSUES_FAILURE,
   OPEN_PROJECT_DETAILS,
+  FETCH_UPDATE_REPO_SUCCESS,
 } from './utils/constants';
 
 function reducer(state = {
@@ -52,6 +53,8 @@ function reducer(state = {
       return {...state, repos: action.repos };
     case OPEN_PROJECT_DETAILS:
       return {...state, detailsOpen: action.toggle, repoOpen: action.repo};
+    case FETCH_UPDATE_REPO_SUCCESS:
+      return {...state, repos: state.repos.map(repo => repo.id === action.repo.id ? action.repo : repo)};
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:

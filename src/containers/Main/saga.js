@@ -1,7 +1,7 @@
 import { Buffer } from 'buffer';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from '../../utils/request';
-import { FETCH_GET_TOKEN, FETCH_GET_TOKEN_SUCCESS, FETCH_GET_TOKEN_FAILURE, FETCH_ACCOUNT, FETCH_ACCOUNT_SUCCESS, FETCH_ACCOUNT_FAILURE, FETCH_USER_REPOS, FETCH_USER_REPOS_SUCCESS, FETCH_USER_REPOS_FAILURE } from '../../utils/constants';
+import { FETCH_GET_TOKEN, FETCH_GET_TOKEN_SUCCESS, FETCH_GET_TOKEN_FAILURE, FETCH_ACCOUNT, FETCH_ACCOUNT_SUCCESS, FETCH_ACCOUNT_FAILURE, FETCH_USER_REPOS, FETCH_USER_REPOS_SUCCESS, FETCH_USER_REPOS_FAILURE, FETCH_UPDATE_REPO_FAILURE, FETCH_UPDATE_REPO_SUCCESS, FETCH_UPDATE_REPO } from '../../utils/constants';
 
 function* getUserToken(action) {
   const {username, password} = action;
@@ -60,10 +60,33 @@ function* fetchUserRepos(action) {
   }
 }
 
+function* fetchUpdateRepo(action) {
+  try {
+    const {repo, owner, token} = action;
+    let headers = {};
+    if (token) {
+      headers = {
+        Authorization: `Basic ${token}`,
+      };
+    }
+    const response = yield call(request, `https://api.github.com/repos/${owner}/${repo}`, {
+      method: 'GET',
+      headers,
+    });
+    delete response['organization'];
+    delete response['network_count'];
+    delete response['subscribers_count'];
+    yield put({ type: FETCH_UPDATE_REPO_SUCCESS, repo: response});
+  } catch (error) {
+    yield put({ type: FETCH_UPDATE_REPO_FAILURE, message: error.message});
+  }
+}
+
 function* saga() {
   yield takeLatest(FETCH_GET_TOKEN, getUserToken);
   yield takeLatest(FETCH_ACCOUNT, fetchAccount);
   yield takeLatest(FETCH_USER_REPOS, fetchUserRepos);
+  yield takeLatest(FETCH_UPDATE_REPO, fetchUpdateRepo);
 }
 
 export default saga;

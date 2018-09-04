@@ -1,52 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Octicon, { Eye } from '@githubprimer/octicons-react';
+import Icon from '@material-ui/core';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SpanGithub from '../../styles/GithubComponent';
-import { watchRepoSuccess, watchRepoFailure } from '../../actions';
 
-const mapStateToProps = state => ({
-  token: state.reducer.token,
-  githubAccount: state.reducer.githubAccount,
-});
-
-const mapDispatchToProps = dispatch => ({
-  watchRepo: (repo, account, token) => {
-    fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
-    })
-      .then(message => dispatch(watchRepoSuccess(message)))
-      .catch(err => dispatch(watchRepoFailure(err.message)));
-  },
-  unWatchRepo: (repo, account, token) => {
-    fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
-    })
-      .then(() => dispatch(watchRepoSuccess(`UnWatch ${repo} successfully`)))
-      .catch(err => dispatch(watchRepoFailure(err.message)));
-  },
-  errorWatched: message => dispatch(watchRepoFailure(message)),
-});
-
-class WatchesComponent extends React.Component {
+class Watches extends React.Component {
 
   constructor(){
     super();
     this.state = {
-      watched: 'Watch',
+      watched: false,
+      onClickEvent: false,
     };
-    this.onWatchRepoEventHandler = this.onWatchRepoEventHandler.bind(this);
   }
 
   componentDidMount () {
     const { repo,
-      githubAccount: account,
+      owner: account,
       token } = this.props;
     fetch(`https://api.github.com/repos/${account}/${repo}/subscription`, {
       method: 'GET',
@@ -57,38 +28,52 @@ class WatchesComponent extends React.Component {
       .then(message => {
         if (message.status === 200) {
           this.setState({
-            watched: 'unWatch',
+            watched: true,
+            onClickEvent: false,
           });
         }
       })
       .catch(err => {
-        if(token) this.props.errorWatched(err.message);
+        if (token) this.props.onErrorWatchEventHandler(`watch ${err.message}`);
       });
   }
 
-  onWatchRepoEventHandler(ev) {
+  componentDidUpdate (prevProps, prevState) {
+    const { onWatchRepoEventHandler, token } = this.props;
+
+    if (token && prevState.watched !== this.state.watched && this.state.onClickEvent) {
+      onWatchRepoEventHandler(this.state.watched);
+    }
+  }
+
+  onClickWatchEvent = ev => {
     ev.preventDefault();
-    if (this.state.watched === 'Watch') {
-      this.props.watchRepo(this.props.repo, this.props.githubAccount, this.props.token);
-      if (this.props.token) this.setState({ watched: 'UnWatch' });
+    if (this.props.token) {
+      this.setState({
+        watched: !this.state.watched,
+        onClickEvent: true,
+      });
     } else {
-      this.props.unWatchRepo(this.props.repo, this.props.githubAccount, this.props.token);
-      if (this.props.token) this.setState({ watched: 'Watch'});
+      this.props.onWatchRepoEventHandler(true);
     }
   }
 
   render() {
-    return (<SpanGithub onClick={this.onWatchRepoEventHandler}>{this.state.watched} {this.props.watches}<Octicon icon={Eye} size='medium' verticalAlign='middle' /></SpanGithub>);
+    const span = (this.state.watched)
+      ? (<SpanGithub onClick={this.onClickWatchEvent}>UnWatch {this.props.watches} <VisibilityOffIcon /></SpanGithub>
+      )
+      : (<SpanGithub onClick={this.onClickWatchEvent}>Watch {this.props.watches} <Octicon icon={Eye} size='medium' verticalAlign='middle' /></SpanGithub>);
+    return span;
   }
 }
 
-const Watches = connect(mapStateToProps, mapDispatchToProps, null)(WatchesComponent);
-
-WatchesComponent.propTypes = {
+Watches.propTypes = {
   repo: PropTypes.string,
   watches: PropTypes.number,
-  githubAccount: PropTypes.string,
+  owner: PropTypes.string,
   token: PropTypes.string,
+  onWatchRepoEventHandler: PropTypes.func,
+  onErrorWatchEventHandler: PropTypes.func,
 };
 
 export default Watches;
