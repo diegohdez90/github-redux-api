@@ -15,6 +15,14 @@ div.no-repos > h3.no-repos-found, h3.repos-found{
   font-size: 1em;
 }
 
+div.repos-content {
+  margin: 3%;
+}
+
+ul.pagination {
+  margin-left: 2%;
+}
+
 h3.title-issue {
   margin:0;
 }
