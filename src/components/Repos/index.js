@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import Repo from '../Repo';
+import RepoList from '../../styles/ListRepo';
 
 const Repos = ({repos,
   pageSize,
@@ -17,9 +18,9 @@ const Repos = ({repos,
   onForkRepoEventHandler,
   repoOpen,
 }) => (Array.isArray(repos)) ? (
-  <div>
+  <div className='repos-content'>
     {(account) ? (<h3 className="repos-found">{account.name} has {account.public_repos} public repositories</h3>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>)}
-    <ul>
+    <RepoList>
       {
         repos.map(repo => <Repo
           key={repo.id}
@@ -36,7 +37,7 @@ const Repos = ({repos,
           onForkRepoEventHandler={onForkRepoEventHandler}
         />)
       }
-    </ul>
+    </RepoList>
     <ReactPaginate
       containerClassName={'pagination'}
       subContainerClassName={'pages pagination'}
