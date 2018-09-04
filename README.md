@@ -15,7 +15,7 @@ Dependencies
 ```
 $ npm run start:dev
 ```
-2. Look at in the browser.
+2. Open in the browser [http://localhost:3000/](http://localhost:3000/).
 
 ## Build production
 
