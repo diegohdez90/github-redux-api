@@ -28,7 +28,8 @@ import { USERNAME,
   OPEN_PROJECT_DETAILS,
   FETCH_UPDATE_REPO_SUCCESS,
   FETCH_UPDATE_REPO_FAILURE,
-  FETCH_UPDATE_REPO} from './utils/constants';
+  FETCH_UPDATE_REPO,
+  SET_PAGE} from './utils/constants';
 
 export function clearMessage () {
   return {
@@ -102,11 +103,12 @@ export function openRepoDetails (repo, toggle) {
   };
 }
 
-export function fetchUserRepos (githubAccount, token) {
+export function fetchUserRepos (githubAccount, token, page) {
   return {
     type: FETCH_USER_REPOS,
     githubAccount,
     token,
+    page,
   };
 }
 
@@ -127,6 +129,13 @@ export function getReposFailure(message) {
 export function fetchStarredRepo() {
   return {
     type: FETCH_STARRED_REPO,
+  };
+}
+
+export function setPage(number){
+  return {
+    type: SET_PAGE,
+    number,
   };
 }
 

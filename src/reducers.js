@@ -20,10 +20,12 @@ import { USERNAME,
   FETCH_REPO_ISSUES_FAILURE,
   OPEN_PROJECT_DETAILS,
   FETCH_UPDATE_REPO_SUCCESS,
+  SET_PAGE,
 } from './utils/constants';
 
 function reducer(state = {
   detailsOpen: false,
+  page: 1,
   pageSize: 30,
 }, action) {
   switch (action.type) {
@@ -52,6 +54,8 @@ function reducer(state = {
       return { ...state, githubAccount: action.githubAccount};
     case FETCH_USER_REPOS_SUCCESS:
       return {...state, repos: action.repos };
+    case SET_PAGE:
+      return {...state, page: action.number};
     case OPEN_PROJECT_DETAILS:
       return {...state, detailsOpen: action.toggle, repoOpen: action.repo};
     case FETCH_UPDATE_REPO_SUCCESS:
