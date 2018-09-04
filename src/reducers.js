@@ -24,6 +24,7 @@ import { USERNAME,
 
 function reducer(state = {
   detailsOpen: false,
+  pageSize: 30,
 }, action) {
   switch (action.type) {
     case USERNAME:
