@@ -23,6 +23,8 @@ import { clearMessage,
   forkRepoSuccess,
   forkRepoFailure,
   setPage,
+  fetchRepoIssuesSuccess,
+  fetchRepoIssuesFailure,
 } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -33,6 +35,7 @@ const mapStateToProps = state => ({
   account: state.reducer.account,
   detailsOpen: state.reducer.detailsOpen,
   repoOpen: state.reducer.repoOpen,
+  issues: state.reducer.issues,
   pageSize: state.reducer.pageSize,
   page: state.reducer.page,
 });
@@ -129,6 +132,21 @@ const mapDispatchToProps = dispatch => ({
         dispatch(forkRepoFailure(err.message));
       });
   },
+  getIssues: (repo, githubAccount, token) => {
+    fetch(`https://api.github.com/repos/${githubAccount}/${repo}/issues`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/vnd.github.symmetra-preview+json',
+      },
+    })
+      .then(async response => {
+        const issues = await Promise.resolve(response.json());
+        dispatch(fetchRepoIssuesSuccess(issues, repo));
+      })
+      .catch(err => dispatch(fetchRepoIssuesFailure(err.message)));
+  },
 });
 
 const styleComponent = {
@@ -164,6 +182,7 @@ class MainComponent extends React.Component {
     if (prevProps.page !== this.props.page) {
       this.props.fetchUserRepos(this.props.owner, this.props.token, this.props.page);
     }
+    if (this.props.repoOpen && this.props.account) this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
   }
   onHandlerModalClose = () => {
     this.props.clearMessage();
@@ -270,6 +289,7 @@ class MainComponent extends React.Component {
         onOpenRepoDetails={this.onOpenRepoDetails}
         detailsOpen={this.props.detailsOpen}
         repoOpen={this.props.repoOpen}
+        issues={this.props.issues}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
         onErrorStarEventHandler={this.onErrorStarEventHandler}
         onWatchRepoEventHandler={this.onWatchRepoEventHandler}

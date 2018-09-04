@@ -17,6 +17,7 @@ const Repos = ({repos,
   onErrorWatchEventHandler,
   onForkRepoEventHandler,
   repoOpen,
+  issues,
 }) => (Array.isArray(repos)) ? (
   <div className='repos-content'>
     {(account) ? (<h3 className="repos-found">{account.name} has {account.public_repos} public repositories</h3>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>)}
@@ -29,6 +30,7 @@ const Repos = ({repos,
           token={token}
           onOpenRepoDetails={onOpenRepoDetails}
           isRepoOpen={(repoOpen === repo.name) ? true : false}
+          issues={repoOpen === repo.name ? issues : []}
           repoOpen={repoOpen}
           onStarRepoEventHandler={onStarRepoEventHandler}
           onErrorStarEventHandler={onErrorStarEventHandler}
@@ -38,7 +40,7 @@ const Repos = ({repos,
         />)
       }
     </RepoList>
-    <ReactPaginate
+    { account ? <ReactPaginate
       containerClassName={'pagination'}
       subContainerClassName={'pages pagination'}
       activeClassName={'active'}
@@ -52,8 +54,12 @@ const Repos = ({repos,
           onSetPage(page.selected);
         }
       }
-    />
+    /> : null}
   </div>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>);
+
+Repos.defaultProps = {
+  issues: [],
+};
 
 Repos.propTypes = {
   account: PropTypes.object,
@@ -68,6 +74,7 @@ Repos.propTypes = {
   onForkRepoEventHandler: PropTypes.func,
   detailsOpen: PropTypes.bool,
   repoOpen: PropTypes.string,
+  issues: PropTypes.array,
   page: PropTypes.number,
   pageSize: PropTypes.number,
   onSetPage: PropTypes.func,

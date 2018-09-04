@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Forks from '../Forks';
 import Stars from '../Stars';
 import Watches from '../Watches';
+import Issues from '../Issues';
 
 class RepoDetails extends React.Component {
 
@@ -45,8 +46,9 @@ class RepoDetails extends React.Component {
       onForkRepoEventHandler,
       onOpenRepoDetails,
       repoOpen,
-      isRepoOpen } = this.props;
-    const details = (this.state.toggleIssues && repoOpen) ? (<div>
+      isRepoOpen,
+      issues } = this.props;
+    const details = (isRepoOpen) ? (<div>
       <Watches
         watches={watches}
         repo={name}
@@ -67,6 +69,10 @@ class RepoDetails extends React.Component {
         forks={forks}
         repo={name}
         onForkRepoEventHandler={onForkRepoEventHandler}
+      />
+      <Issues
+        repo={name}
+        issues={issues}
       />
     </div>) : null;
 
@@ -98,6 +104,7 @@ RepoDetails.propTypes = {
   onForkRepoEventHandler: PropTypes.func,
   repoOpen: PropTypes.string,
   isRepoOpen: PropTypes.bool,
+  issues: PropTypes.array,
 };
 
 export default RepoDetails;
