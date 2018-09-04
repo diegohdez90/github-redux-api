@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Tab, Tabs } from '@material-ui/core';
 import Forks from '../Forks';
 import Stars from '../Stars';
 import Watches from '../Watches';
@@ -11,6 +12,12 @@ class RepoDetails extends React.Component {
     super(props);
     this.state = {
       toggleIssues: false,
+      /**
+       * 0: Issues
+       * 1: Branches
+       * 2: Commits
+       */
+      view: 0,
     };
   }
 
@@ -32,7 +39,14 @@ class RepoDetails extends React.Component {
     });
   }
 
+  changeTab = (e, value) => {
+    this.setState({
+      view: value,
+    });
+  }
+
   render () {
+    const { view } = this.state;
     const { watches,
       stars,
       forks,
@@ -70,10 +84,19 @@ class RepoDetails extends React.Component {
         repo={name}
         onForkRepoEventHandler={onForkRepoEventHandler}
       />
-      <Issues
+      <div>
+        <Tabs value={view} onChange={this.changeTab}>
+          <Tab label='Issues'></Tab>
+          <Tab label='Branches'></Tab>
+          <Tab label='Commits'></Tab>
+        </Tabs>
+      </div>
+      { view === 0 && <Issues
         repo={name}
         issues={issues}
-      />
+      /> }
+      { view === 1 && <div>Branches</div>}
+      { view === 2 && <div>Commits</div>}
     </div>) : null;
 
     return (
