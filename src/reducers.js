@@ -59,7 +59,7 @@ function reducer(state = {
     case SET_PAGE:
       return {...state, page: action.number};
     case OPEN_PROJECT_DETAILS:
-      return {...state, detailsOpen: action.toggle, repoOpen: action.repo, issues: []};
+      return {...state, detailsOpen: action.toggle, repoOpen: action.toggle ? action.repo : '', issues: []};
     case FETCH_UPDATE_REPO_SUCCESS:
       return {...state, repos: state.repos.map(repo => repo.id === action.repo.id ? action.repo : repo)};
     case FETCH_REPO_ISSUES_SUCCESS:

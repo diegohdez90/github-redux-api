@@ -182,7 +182,8 @@ class MainComponent extends React.Component {
     if (prevProps.page !== this.props.page) {
       this.props.fetchUserRepos(this.props.owner, this.props.token, this.props.page);
     }
-    if (this.props.repoOpen && this.props.account) this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
+
+    if (this.props.openDetails && this.props.repoOpen !== '' && this.props.repoOpen !== prevProps.repoOpen && this.props.account) this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
   }
   onHandlerModalClose = () => {
     this.props.clearMessage();
