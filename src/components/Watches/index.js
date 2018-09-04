@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Octicon, { Eye } from '@githubprimer/octicons-react';
-import Icon from '@material-ui/core';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SpanGithub from '../../styles/GithubComponent';
 
