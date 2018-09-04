@@ -14,8 +14,9 @@ class RepoDetails extends React.Component {
       toggleIssues: false,
       /**
        * 0: Issues
-       * 1: Branches
-       * 2: Commits
+       * 1: Pull Request
+       * 2: Branches
+       * 3: Commits
        */
       view: 0,
     };
@@ -91,12 +92,13 @@ class RepoDetails extends React.Component {
           <Tab label='Commits'></Tab>
         </Tabs>
       </div>
-      { view === 0 && <Issues
+      { view === 1 && <Issues
         repo={name}
         issues={issues}
       /> }
-      { view === 1 && <div>Branches</div>}
-      { view === 2 && <div>Commits</div>}
+      { view === 2 && <div>PullRequest</div>}
+      { view === 3 && <div>Branches</div>}
+      { view === 4 && <div>Commits</div>}
     </div>) : null;
 
     return (
