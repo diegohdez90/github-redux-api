@@ -21,10 +21,12 @@ import { USERNAME,
   OPEN_PROJECT_DETAILS,
   FETCH_UPDATE_REPO_SUCCESS,
   SET_PAGE,
+  FETCH_REPO_ISSUES_SUCCESS,
 } from './utils/constants';
 
 function reducer(state = {
   detailsOpen: false,
+  issues: [],
   page: 1,
   pageSize: 30,
 }, action) {
@@ -57,9 +59,11 @@ function reducer(state = {
     case SET_PAGE:
       return {...state, page: action.number};
     case OPEN_PROJECT_DETAILS:
-      return {...state, detailsOpen: action.toggle, repoOpen: action.repo};
+      return {...state, detailsOpen: action.toggle, repoOpen: action.repo, issues: []};
     case FETCH_UPDATE_REPO_SUCCESS:
       return {...state, repos: state.repos.map(repo => repo.id === action.repo.id ? action.repo : repo)};
+    case FETCH_REPO_ISSUES_SUCCESS:
+      return {...state, issues: action.issues};
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:
