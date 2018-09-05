@@ -27,6 +27,8 @@ import { clearMessage,
   fetchRepoIssuesFailure,
   fetchRepoPullSuccess,
   fetchRepoPullFailure,
+  fetchRepoBRanchesSuccess,
+  fetchRepoBranchesFailure,
 } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -39,6 +41,7 @@ const mapStateToProps = state => ({
   repoOpen: state.reducer.repoOpen,
   issues: state.reducer.issues,
   pulls: state.reducer.pulls,
+  branches: state.reducer.branches,
   pageSize: state.reducer.pageSize,
   page: state.reducer.page,
 });
@@ -194,6 +197,21 @@ const mapDispatchToProps = dispatch => ({
       })
       .catch(err => dispatch(fetchRepoPullFailure(err.message)));
   },
+  // /repos/:owner/:repo/branches
+  getBranches: (repo, owner, token) => {
+    const headers = (token) ? { Authorization: `Basic ${token}` } : {};
+    fetch(`https://api.github.com/repos/${owner}/${repo}/branches`, {
+      method: 'GET',
+      headers,
+    })
+      .then(async response => {
+        if (response.status === 200) {
+          const branches = await Promise.resolve(response.json());
+          dispatch(fetchRepoBRanchesSuccess(branches));
+        }
+      })
+      .catch(err => dispatch(fetchRepoBranchesFailure(err.message)));
+  },
 });
 
 const styleComponent = {
@@ -233,6 +251,7 @@ class MainComponent extends React.Component {
     if (this.props.openDetails && this.props.repoOpen !== '' && this.props.repoOpen !== prevProps.repoOpen && this.props.account) {
       this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
       this.props.getPulls(this.props.repoOpen, this.props.owner, this.props.token);
+      this.props.getBranches(this.props.repoOpen, this.props.owner);
     }
   }
 
@@ -331,6 +350,9 @@ class MainComponent extends React.Component {
       case 1:
         this.props.getPulls(repo, owner, token, 0);
         break;
+      case 2:
+        this.props.getBranches(repo, owner, token);
+        break;
       default:
     }
   }
@@ -366,6 +388,7 @@ class MainComponent extends React.Component {
         onChangeIssueTab={this.onChangeIssueTab}
         pulls={this.props.pulls}
         onChangePullTab={this.onChangePullTab}
+        branches={this.props.branches}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
         onErrorStarEventHandler={this.onErrorStarEventHandler}
         onWatchRepoEventHandler={this.onWatchRepoEventHandler}

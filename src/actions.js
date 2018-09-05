@@ -32,7 +32,10 @@ import { USERNAME,
   SET_PAGE,
   FETCH_REPO_PULL,
   FETCH_REPO_PULL_SUCCESS,
-  FETCH_REPO_PULL_FAILURE} from './utils/constants';
+  FETCH_REPO_PULL_FAILURE,
+  FETCH_REPO_BRANCHES,
+  FETCH_REPO_BRANCHES_SUCCESS,
+  FETCH_REPO_BRANCHES_FAILURE} from './utils/constants';
 
 export function clearMessage () {
   return {
@@ -282,6 +285,26 @@ export function fetchRepoPullSuccess (pulls) {
 export function fetchRepoPullFailure (message) {
   return {
     type: FETCH_REPO_PULL_FAILURE,
+    message,
+  };
+}
+
+export function fetchRepoBranches () {
+  return {
+    type: FETCH_REPO_BRANCHES,
+  };
+}
+
+export function fetchRepoBRanchesSuccess (branches) {
+  return {
+    type: FETCH_REPO_BRANCHES_SUCCESS,
+    branches,
+  };
+}
+
+export function fetchRepoBranchesFailure (message) {
+  return {
+    type: FETCH_REPO_BRANCHES_FAILURE,
     message,
   };
 }

@@ -20,6 +20,7 @@ const Repos = ({repos,
   issues,
   onChangeIssueTab,
   pulls,
+  branches,
   onChangePullTab,
   onLoadOpen,
 }) => (Array.isArray(repos)) ? (
@@ -38,6 +39,7 @@ const Repos = ({repos,
           onChangeIssueTab={onChangeIssueTab}
           pulls={repoOpen === repo.name ? pulls : []}
           onChangePullTab={onChangePullTab}
+          branches={branches}
           onLoadOpen={onLoadOpen}
           repoOpen={repoOpen}
           onStarRepoEventHandler={onStarRepoEventHandler}
@@ -88,6 +90,7 @@ Repos.propTypes = {
   pulls: PropTypes.array,
   onChangePullTab: PropTypes.func,
   onLoadOpen: PropTypes.func,
+  branches: PropTypes.array,
   page: PropTypes.number,
   pageSize: PropTypes.number,
   onSetPage: PropTypes.func,
