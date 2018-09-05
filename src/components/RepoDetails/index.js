@@ -45,6 +45,7 @@ class RepoDetails extends React.Component {
     this.setState({
       view: value,
     });
+    this.props.onLoadOpen(value);
   }
 
   render () {
@@ -143,6 +144,7 @@ RepoDetails.propTypes = {
   onChangeIssueTab: PropTypes.func,
   pulls: PropTypes.array,
   onChangePullTab: PropTypes.func,
+  onLoadOpen: PropTypes.func,
 };
 
 export default RepoDetails;

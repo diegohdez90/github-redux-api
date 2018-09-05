@@ -322,6 +322,19 @@ class MainComponent extends React.Component {
     this.props.getPulls(this.props.repoOpen, this.props.owner, this.props.token, value);
   }
 
+  onLoadOpen = value => {
+    const {repoOpen: repo, owner, token} = this.props;
+    switch (value) {
+      case 0:
+        this.props.getIssues(repo, owner, token, 0);
+        break;
+      case 1:
+        this.props.getPulls(repo, owner, token, 0);
+        break;
+      default:
+    }
+  }
+
   render() {
     const {classes} = this.props;
     const {modal : modalStyle} = styleComponent;
@@ -358,6 +371,7 @@ class MainComponent extends React.Component {
         onWatchRepoEventHandler={this.onWatchRepoEventHandler}
         onErrorWatchEventHandler={this.onErrorWatchEventHandler}
         onForkRepoEventHandler={this.onForkRepoEventHandler}
+        onLoadOpen={this.onLoadOpen}
       />
       <Modal
         aria-labelledby="modal-message"
