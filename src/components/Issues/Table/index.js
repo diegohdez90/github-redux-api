@@ -12,7 +12,7 @@ const TableIssues = ({issues, repo}) => (
           <td>
             <div>
               <h3 className="title-issue">{issue.title}</h3>
-              <span>#{issue.number} {(issue.state === 'open') ? `opened on ${moment(issue.created_at, 'YYYYMMDD').fromNow()} by ${issue.user.login}` : `by ${issue.user.login} closed on ${moment(issue.close_at, 'YYYYMMDD').fromNow()}`}</span>
+              <span>#{issue.number} {(issue.state === 'open') ? `opened on ${moment(issue.created_at, 'YYYYMMDD').fromNow()} by ${issue.user.login}` : `by ${issue.user.login} closed on ${moment(issue.closed_at, 'YYYYMMDD').fromNow()}`}</span>
             </div>
           </td>
         </tr>))

@@ -64,6 +64,7 @@ class RepoDetails extends React.Component {
       repoOpen,
       isRepoOpen,
       issues,
+      onChangeIssueTab,
       pulls } = this.props;
     const details = (isRepoOpen) ? (<div>
       <Watches
@@ -98,6 +99,7 @@ class RepoDetails extends React.Component {
       { view === 0 && <Issues
         repo={name}
         issues={issues}
+        onChangeIssueTab={onChangeIssueTab}
       /> }
       { view === 1 && <Pull repo={name} pulls={pulls}/>}
       { view === 2 && <div>Branches</div>}
@@ -133,6 +135,7 @@ RepoDetails.propTypes = {
   repoOpen: PropTypes.string,
   isRepoOpen: PropTypes.bool,
   issues: PropTypes.array,
+  onChangeIssueTab: PropTypes.func,
   pulls: PropTypes.array,
 };
 

@@ -135,8 +135,21 @@ const mapDispatchToProps = dispatch => ({
         dispatch(forkRepoFailure(err.message));
       });
   },
-  getIssues: (repo, githubAccount, token) => {
-    fetch(`https://api.github.com/repos/${githubAccount}/${repo}/issues`, {
+  getIssues: (repo, githubAccount, token, state) => {
+    let status = '';
+    switch (state) {
+      case 0:
+        status = '?state=open';
+        break;
+      case 1:
+        status = '?state=closed';
+        break;
+      case 2:
+        status = '?state=all';
+        break;
+      default:
+    }
+    fetch(`https://api.github.com/repos/${githubAccount}/${repo}/issues${status}`, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${token}`,
@@ -288,6 +301,11 @@ class MainComponent extends React.Component {
     this.props.postFork(repo, owner, token);
   }
 
+  onChangeIssueTab = value => {
+    console.log(value);
+    this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token, value);
+  }
+
   render() {
     const {classes} = this.props;
     const {modal : modalStyle} = styleComponent;
@@ -316,6 +334,7 @@ class MainComponent extends React.Component {
         detailsOpen={this.props.detailsOpen}
         repoOpen={this.props.repoOpen}
         issues={this.props.issues}
+        onChangeIssueTab={this.onChangeIssueTab}
         pulls={this.props.pulls}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
         onErrorStarEventHandler={this.onErrorStarEventHandler}

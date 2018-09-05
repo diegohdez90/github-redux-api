@@ -15,6 +15,7 @@ const Repo = ({repo,
   onWatchRepoEventHandler,
   onForkRepoEventHandler,
   issues,
+  onChangeIssueTab,
   pulls,
 }) => (<RepoElement>
   <h4>{repo.name}</h4>
@@ -27,6 +28,7 @@ const Repo = ({repo,
     repoOpen={repoOpen}
     isRepoOpen={isRepoOpen}
     issues={issues}
+    onChangeIssueTab={onChangeIssueTab}
     pulls={pulls}
     watches={repo.watchers}
     onWatchRepoEventHandler={onWatchRepoEventHandler}
@@ -47,7 +49,8 @@ Repo.propTypes = {
   onOpenRepoDetails: PropTypes.func,
   repoOpen: PropTypes.string,
   issues: PropTypes.array,
-  pulls: PropTypes.pulls,
+  onChangeIssueTab: PropTypes.func,
+  pulls: PropTypes.array,
   isRepoOpen: PropTypes.bool,
   onStarRepoEventHandler: PropTypes.func,
   onErrorWatchEventHandler: PropTypes.func,

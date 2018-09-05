@@ -18,6 +18,7 @@ const Repos = ({repos,
   onForkRepoEventHandler,
   repoOpen,
   issues,
+  onChangeIssueTab,
   pulls,
 }) => (Array.isArray(repos)) ? (
   <div className='repos-content'>
@@ -32,6 +33,7 @@ const Repos = ({repos,
           onOpenRepoDetails={onOpenRepoDetails}
           isRepoOpen={(repoOpen === repo.name) ? true : false}
           issues={repoOpen === repo.name ? issues : []}
+          onChangeIssueTab={onChangeIssueTab}
           pulls={repoOpen === repo.name ? pulls : []}
           repoOpen={repoOpen}
           onStarRepoEventHandler={onStarRepoEventHandler}
@@ -78,6 +80,7 @@ Repos.propTypes = {
   detailsOpen: PropTypes.bool,
   repoOpen: PropTypes.string,
   issues: PropTypes.array,
+  onChangeIssueTab: PropTypes.func,
   pulls: PropTypes.array,
   page: PropTypes.number,
   pageSize: PropTypes.number,
