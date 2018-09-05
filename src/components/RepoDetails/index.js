@@ -5,6 +5,7 @@ import Forks from '../Forks';
 import Stars from '../Stars';
 import Watches from '../Watches';
 import Issues from '../Issues';
+import Pull from '../Pulls';
 
 class RepoDetails extends React.Component {
 
@@ -62,7 +63,8 @@ class RepoDetails extends React.Component {
       onOpenRepoDetails,
       repoOpen,
       isRepoOpen,
-      issues } = this.props;
+      issues,
+      pulls } = this.props;
     const details = (isRepoOpen) ? (<div>
       <Watches
         watches={watches}
@@ -88,17 +90,18 @@ class RepoDetails extends React.Component {
       <div>
         <Tabs value={view} onChange={this.changeTab}>
           <Tab label='Issues'></Tab>
+          <Tab label='Pull Request'></Tab>
           <Tab label='Branches'></Tab>
           <Tab label='Commits'></Tab>
         </Tabs>
       </div>
-      { view === 1 && <Issues
+      { view === 0 && <Issues
         repo={name}
         issues={issues}
       /> }
-      { view === 2 && <div>PullRequest</div>}
-      { view === 3 && <div>Branches</div>}
-      { view === 4 && <div>Commits</div>}
+      { view === 1 && <Pull repo={name} pulls={pulls}/>}
+      { view === 2 && <div>Branches</div>}
+      { view === 3 && <div>Commits</div>}
     </div>) : null;
 
     return (
@@ -130,6 +133,7 @@ RepoDetails.propTypes = {
   repoOpen: PropTypes.string,
   isRepoOpen: PropTypes.bool,
   issues: PropTypes.array,
+  pulls: PropTypes.array,
 };
 
 export default RepoDetails;

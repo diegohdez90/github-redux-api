@@ -25,6 +25,8 @@ import { clearMessage,
   setPage,
   fetchRepoIssuesSuccess,
   fetchRepoIssuesFailure,
+  fetchRepoPullSuccess,
+  fetchRepoPullFailure,
 } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -36,6 +38,7 @@ const mapStateToProps = state => ({
   detailsOpen: state.reducer.detailsOpen,
   repoOpen: state.reducer.repoOpen,
   issues: state.reducer.issues,
+  pulls: state.reducer.pulls,
   pageSize: state.reducer.pageSize,
   page: state.reducer.page,
 });
@@ -142,10 +145,28 @@ const mapDispatchToProps = dispatch => ({
       },
     })
       .then(async response => {
-        const issues = await Promise.resolve(response.json());
-        dispatch(fetchRepoIssuesSuccess(issues, repo));
+        if (response.status === 200) {
+          const issues = await Promise.resolve(response.json());
+          dispatch(fetchRepoIssuesSuccess(issues));
+        }
       })
       .catch(err => dispatch(fetchRepoIssuesFailure(err.message)));
+  },
+  getPulls: (repo, githubAccount, token) => {
+    const headers = (token) ? { Authorization : `Basic ${token}` } : {};
+    headers['Content-Type'] = 'application/json';
+    headers.Accept = 'application/vnd.github.symmetra-preview+json';
+    fetch(`https://api.github.com/repos/${githubAccount}/${repo}/pulls`, {
+      method: 'GET',
+      headers,
+    })
+      .then(async response => {
+        if (response.status === 200) {
+          const pulls = await Promise.resolve(response.json());
+          dispatch(fetchRepoPullSuccess(pulls));
+        }
+      })
+      .catch(err => dispatch(fetchRepoPullFailure(err.message)));
   },
 });
 
@@ -183,8 +204,12 @@ class MainComponent extends React.Component {
       this.props.fetchUserRepos(this.props.owner, this.props.token, this.props.page);
     }
 
-    if (this.props.openDetails && this.props.repoOpen !== '' && this.props.repoOpen !== prevProps.repoOpen && this.props.account) this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
+    if (this.props.openDetails && this.props.repoOpen !== '' && this.props.repoOpen !== prevProps.repoOpen && this.props.account) {
+      this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
+      this.props.getPulls(this.props.repoOpen, this.props.owner, this.props.token);
+    }
   }
+
   onHandlerModalClose = () => {
     this.props.clearMessage();
     this.setState({
@@ -291,6 +316,7 @@ class MainComponent extends React.Component {
         detailsOpen={this.props.detailsOpen}
         repoOpen={this.props.repoOpen}
         issues={this.props.issues}
+        pulls={this.props.pulls}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
         onErrorStarEventHandler={this.onErrorStarEventHandler}
         onWatchRepoEventHandler={this.onWatchRepoEventHandler}

@@ -29,7 +29,10 @@ import { USERNAME,
   FETCH_UPDATE_REPO_SUCCESS,
   FETCH_UPDATE_REPO_FAILURE,
   FETCH_UPDATE_REPO,
-  SET_PAGE} from './utils/constants';
+  SET_PAGE,
+  FETCH_REPO_PULL,
+  FETCH_REPO_PULL_SUCCESS,
+  FETCH_REPO_PULL_FAILURE} from './utils/constants';
 
 export function clearMessage () {
   return {
@@ -249,17 +252,36 @@ export function fetchRepoIssues () {
   };
 }
 
-export function fetchRepoIssuesSuccess (issues, repo) {
+export function fetchRepoIssuesSuccess (issues) {
   return {
     type: FETCH_REPO_ISSUES_SUCCESS,
     issues,
-    repo,
   };
 }
 
 export function fetchRepoIssuesFailure (message) {
   return {
     type: FETCH_REPO_ISSUES_FAILURE,
+    message,
+  };
+}
+
+export function fetchRepoPull () {
+  return {
+    type: FETCH_REPO_PULL,
+  };
+}
+
+export function fetchRepoPullSuccess (pulls) {
+  return {
+    type: FETCH_REPO_PULL_SUCCESS,
+    pulls,
+  };
+}
+
+export function fetchRepoPullFailure (message) {
+  return {
+    type: FETCH_REPO_PULL_FAILURE,
     message,
   };
 }

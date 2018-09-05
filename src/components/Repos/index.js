@@ -18,6 +18,7 @@ const Repos = ({repos,
   onForkRepoEventHandler,
   repoOpen,
   issues,
+  pulls,
 }) => (Array.isArray(repos)) ? (
   <div className='repos-content'>
     {(account) ? (<h3 className="repos-found">{account.name} has {account.public_repos} public repositories</h3>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>)}
@@ -31,6 +32,7 @@ const Repos = ({repos,
           onOpenRepoDetails={onOpenRepoDetails}
           isRepoOpen={(repoOpen === repo.name) ? true : false}
           issues={repoOpen === repo.name ? issues : []}
+          pulls={repoOpen === repo.name ? pulls : []}
           repoOpen={repoOpen}
           onStarRepoEventHandler={onStarRepoEventHandler}
           onErrorStarEventHandler={onErrorStarEventHandler}
@@ -59,6 +61,7 @@ const Repos = ({repos,
 
 Repos.defaultProps = {
   issues: [],
+  pulls: [],
 };
 
 Repos.propTypes = {
@@ -75,6 +78,7 @@ Repos.propTypes = {
   detailsOpen: PropTypes.bool,
   repoOpen: PropTypes.string,
   issues: PropTypes.array,
+  pulls: PropTypes.array,
   page: PropTypes.number,
   pageSize: PropTypes.number,
   onSetPage: PropTypes.func,

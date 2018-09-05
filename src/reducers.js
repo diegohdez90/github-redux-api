@@ -22,11 +22,14 @@ import { USERNAME,
   FETCH_UPDATE_REPO_SUCCESS,
   SET_PAGE,
   FETCH_REPO_ISSUES_SUCCESS,
+  FETCH_REPO_PULL_SUCCESS,
+  FETCH_REPO_PULL_FAILURE,
 } from './utils/constants';
 
 function reducer(state = {
   detailsOpen: false,
   issues: [],
+  pulls: [],
   page: 1,
   pageSize: 30,
 }, action) {
@@ -51,6 +54,7 @@ function reducer(state = {
     case FORK_REPO_SUCCESS:
     case FORK_REPO_FAILURE:
     case FETCH_REPO_ISSUES_FAILURE:
+    case FETCH_REPO_PULL_FAILURE:
       return {...state, message: action.message};
     case GITHUB_ACCOUNT:
       return { ...state, githubAccount: action.githubAccount};
@@ -64,6 +68,8 @@ function reducer(state = {
       return {...state, repos: state.repos.map(repo => repo.id === action.repo.id ? action.repo : repo)};
     case FETCH_REPO_ISSUES_SUCCESS:
       return {...state, issues: action.issues};
+    case FETCH_REPO_PULL_SUCCESS:
+      return {...state, pulls: action.pulls};
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:

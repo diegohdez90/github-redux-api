@@ -27,12 +27,19 @@ h3.title-issue {
   margin:0;
 }
 
-table[id^="table-issue"] td {
+table[id^="table-issue"],
+table[id^="table-pull"] {
+  width: 100%;
+}
+
+table[id^="table-issue"] td,
+table[id^="table-pull"] td {
   padding-bottom: 2%;
   border-bottom: 1px solid #ddd;
 }
 
-table[id^="table-issue"] tr:hover {
+table[id^="table-issue"] tr:hover,
+table[id^="table-pull"] tr:hover {
   background-color: #f5f5f5;
   cursor: pointer;
 }
