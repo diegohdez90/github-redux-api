@@ -165,11 +165,24 @@ const mapDispatchToProps = dispatch => ({
       })
       .catch(err => dispatch(fetchRepoIssuesFailure(err.message)));
   },
-  getPulls: (repo, githubAccount, token) => {
+  getPulls: (repo, githubAccount, token, state) => {
     const headers = (token) ? { Authorization : `Basic ${token}` } : {};
+    let status = '';
+    switch (state) {
+      case 0:
+        status = '?state=open';
+        break;
+      case 1:
+        status = '?state=closed';
+        break;
+      case 2:
+        status = '?state=all';
+        break;
+      default:
+    }
     headers['Content-Type'] = 'application/json';
     headers.Accept = 'application/vnd.github.symmetra-preview+json';
-    fetch(`https://api.github.com/repos/${githubAccount}/${repo}/pulls`, {
+    fetch(`https://api.github.com/repos/${githubAccount}/${repo}/pulls${status}`, {
       method: 'GET',
       headers,
     })
@@ -302,8 +315,11 @@ class MainComponent extends React.Component {
   }
 
   onChangeIssueTab = value => {
-    console.log(value);
     this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token, value);
+  }
+
+  onChangePullTab = value => {
+    this.props.getPulls(this.props.repoOpen, this.props.owner, this.props.token, value);
   }
 
   render() {
@@ -336,6 +352,7 @@ class MainComponent extends React.Component {
         issues={this.props.issues}
         onChangeIssueTab={this.onChangeIssueTab}
         pulls={this.props.pulls}
+        onChangePullTab={this.onChangePullTab}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
         onErrorStarEventHandler={this.onErrorStarEventHandler}
         onWatchRepoEventHandler={this.onWatchRepoEventHandler}

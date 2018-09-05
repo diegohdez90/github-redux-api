@@ -65,7 +65,8 @@ class RepoDetails extends React.Component {
       isRepoOpen,
       issues,
       onChangeIssueTab,
-      pulls } = this.props;
+      pulls,
+      onChangePullTab } = this.props;
     const details = (isRepoOpen) ? (<div>
       <Watches
         watches={watches}
@@ -101,7 +102,11 @@ class RepoDetails extends React.Component {
         issues={issues}
         onChangeIssueTab={onChangeIssueTab}
       /> }
-      { view === 1 && <Pull repo={name} pulls={pulls}/>}
+      { view === 1 && <Pull
+        repo={name}
+        pulls={pulls}
+        onChangePullTab={onChangePullTab}
+      />}
       { view === 2 && <div>Branches</div>}
       { view === 3 && <div>Commits</div>}
     </div>) : null;
@@ -137,6 +142,7 @@ RepoDetails.propTypes = {
   issues: PropTypes.array,
   onChangeIssueTab: PropTypes.func,
   pulls: PropTypes.array,
+  onChangePullTab: PropTypes.func,
 };
 
 export default RepoDetails;

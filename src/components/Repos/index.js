@@ -20,6 +20,7 @@ const Repos = ({repos,
   issues,
   onChangeIssueTab,
   pulls,
+  onChangePullTab,
 }) => (Array.isArray(repos)) ? (
   <div className='repos-content'>
     {(account) ? (<h3 className="repos-found">{account.name} has {account.public_repos} public repositories</h3>) : (<div className="no-repos"><h3 className="no-repos-found">No repos</h3></div>)}
@@ -35,6 +36,7 @@ const Repos = ({repos,
           issues={repoOpen === repo.name ? issues : []}
           onChangeIssueTab={onChangeIssueTab}
           pulls={repoOpen === repo.name ? pulls : []}
+          onChangePullTab={onChangePullTab}
           repoOpen={repoOpen}
           onStarRepoEventHandler={onStarRepoEventHandler}
           onErrorStarEventHandler={onErrorStarEventHandler}
@@ -82,6 +84,7 @@ Repos.propTypes = {
   issues: PropTypes.array,
   onChangeIssueTab: PropTypes.func,
   pulls: PropTypes.array,
+  onChangePullTab: PropTypes.func,
   page: PropTypes.number,
   pageSize: PropTypes.number,
   onSetPage: PropTypes.func,

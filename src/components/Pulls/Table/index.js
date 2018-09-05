@@ -12,7 +12,7 @@ const TablePull = ({ pulls, repo }) => (
           <td>
             <div>
               <h3 className="title-issue">{pull.title}</h3>
-              <span>#{pull.number} {(pull.state === 'open') ? `opened on ${moment(pull.created_at, 'YYYYMMDD').fromNow()} by ${pull.user.login}` : `by ${pull.user.login} closed on ${moment(pull.close_at, 'YYYYMMDD').fromNow()}`}</span>
+              <span>#{pull.number} {(pull.state === 'open') ? `opened on ${moment(pull.created_at, 'YYYYMMDD').fromNow()} by ${pull.user.login}` : `by ${pull.user.login} closed on ${moment(pull.closed_at, 'YYYYMMDD').fromNow()}`}</span>
             </div>
           </td>
         </tr>))
