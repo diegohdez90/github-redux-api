@@ -9,6 +9,18 @@ Dependencies
 - Material-UI
 - styled components
 
+## Clone repository
+
+```
+$ git clone https://github.com/diegohdez90/github-redux-api.git <your_own_name>
+```
+
+## Install dependencies
+
+```
+$ npm i
+```
+
 ## How to run?
 
 1. Run script.
