@@ -26,6 +26,8 @@ import { USERNAME,
   FETCH_REPO_PULL_FAILURE,
   FETCH_REPO_BRANCHES_FAILURE,
   FETCH_REPO_BRANCHES_SUCCESS,
+  FETCH_REPO_COMMITS_FAILURE,
+  FETCH_REPO_COMMITS_SUCCESS,
 } from './utils/constants';
 
 function reducer(state = {
@@ -33,6 +35,7 @@ function reducer(state = {
   issues: [],
   pulls: [],
   branches: [],
+  commits: [],
   page: 1,
   pageSize: 30,
 }, action) {
@@ -59,6 +62,7 @@ function reducer(state = {
     case FETCH_REPO_ISSUES_FAILURE:
     case FETCH_REPO_PULL_FAILURE:
     case FETCH_REPO_BRANCHES_FAILURE:
+    case FETCH_REPO_COMMITS_FAILURE:
       return {...state, message: action.message};
     case GITHUB_ACCOUNT:
       return { ...state, githubAccount: action.githubAccount};
@@ -76,6 +80,8 @@ function reducer(state = {
       return {...state, pulls: action.pulls};
     case FETCH_REPO_BRANCHES_SUCCESS:
       return {...state, branches: action.branches};
+    case FETCH_REPO_COMMITS_SUCCESS:
+      return {...state, commits: action.commits};
     case CLEAR_MESSAGE:
       return{...state, message: ''};
     default:

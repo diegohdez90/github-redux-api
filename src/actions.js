@@ -35,7 +35,10 @@ import { USERNAME,
   FETCH_REPO_PULL_FAILURE,
   FETCH_REPO_BRANCHES,
   FETCH_REPO_BRANCHES_SUCCESS,
-  FETCH_REPO_BRANCHES_FAILURE} from './utils/constants';
+  FETCH_REPO_BRANCHES_FAILURE,
+  FETCH_REPO_COMMITS,
+  FETCH_REPO_COMMITS_SUCCESS,
+  FETCH_REPO_COMMITS_FAILURE} from './utils/constants';
 
 export function clearMessage () {
   return {
@@ -305,6 +308,26 @@ export function fetchRepoBRanchesSuccess (branches) {
 export function fetchRepoBranchesFailure (message) {
   return {
     type: FETCH_REPO_BRANCHES_FAILURE,
+    message,
+  };
+}
+
+export function fetchRepoCommits () {
+  return {
+    type: FETCH_REPO_COMMITS,
+  };
+}
+
+export function fetchRepoCommitsSuccess (commits) {
+  return {
+    type: FETCH_REPO_COMMITS_SUCCESS,
+    commits,
+  };
+}
+
+export function fetchRepoCommitsFailure (message) {
+  return {
+    type: FETCH_REPO_COMMITS_FAILURE,
     message,
   };
 }
