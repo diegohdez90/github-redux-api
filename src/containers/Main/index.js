@@ -29,6 +29,7 @@ import { clearMessage,
   fetchRepoPullFailure,
   fetchRepoBRanchesSuccess,
   fetchRepoBranchesFailure,
+  fetchRepoCommitsSuccess,
 } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -42,6 +43,7 @@ const mapStateToProps = state => ({
   issues: state.reducer.issues,
   pulls: state.reducer.pulls,
   branches: state.reducer.branches,
+  commits: state.reducer.commits,
   pageSize: state.reducer.pageSize,
   page: state.reducer.page,
 });
@@ -212,6 +214,21 @@ const mapDispatchToProps = dispatch => ({
       })
       .catch(err => dispatch(fetchRepoBranchesFailure(err.message)));
   },
+  // /repos/:owner/:repo/commits
+  getCommits: (repo, owner, token) => {
+    const headers = (token) ? { Authorization: `Basic ${token}` } : {};
+    fetch(`https://api.github.com/repos/${owner}/${repo}/commits`, {
+      method: 'GET',
+      headers,
+    })
+      .then(async response => {
+        if (response.status === 200) {
+          const commits = await Promise.resolve(response.json());
+          dispatch(fetchRepoCommitsSuccess(commits));
+        }
+      })
+      .catch(err => dispatch(fetchRepoCommitsSuccess(err.message)));
+  },
 });
 
 const styleComponent = {
@@ -251,7 +268,8 @@ class MainComponent extends React.Component {
     if (this.props.openDetails && this.props.repoOpen !== '' && this.props.repoOpen !== prevProps.repoOpen && this.props.account) {
       this.props.getIssues(this.props.repoOpen, this.props.owner, this.props.token);
       this.props.getPulls(this.props.repoOpen, this.props.owner, this.props.token);
-      this.props.getBranches(this.props.repoOpen, this.props.owner);
+      this.props.getBranches(this.props.repoOpen, this.props.owner, this.props.token);
+      this.props.getCommits(this.props.repoOpen, this.props.owner, this.props.tokenr);
     }
   }
 
@@ -353,6 +371,9 @@ class MainComponent extends React.Component {
       case 2:
         this.props.getBranches(repo, owner, token);
         break;
+      case 3:
+        this.props.getCommits(repo, owner, token);
+        break;
       default:
     }
   }
@@ -389,6 +410,7 @@ class MainComponent extends React.Component {
         pulls={this.props.pulls}
         onChangePullTab={this.onChangePullTab}
         branches={this.props.branches}
+        commits={this.props.commits}
         onStarRepoEventHandler={this.onStarRepoEventHandler}
         onErrorStarEventHandler={this.onErrorStarEventHandler}
         onWatchRepoEventHandler={this.onWatchRepoEventHandler}
