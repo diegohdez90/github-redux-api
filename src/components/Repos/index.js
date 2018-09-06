@@ -31,11 +31,15 @@ const Repos = ({repos,
       {
         repos.map(repo => <Repo
           key={repo.id}
-          repo={repo}
+          name={repo.name}
+          description={repo.description}
           owner={owner}
           token={token}
           onOpenRepoDetails={onOpenRepoDetails}
           isRepoOpen={(repoOpen === repo.name) ? true : false}
+          watches={repo.watchers}
+          forks={repo.forks}
+          stars={repo.stargazers_count}
           issues={repoOpen === repo.name ? issues : []}
           onChangeIssueTab={onChangeIssueTab}
           pulls={repoOpen === repo.name ? pulls : []}

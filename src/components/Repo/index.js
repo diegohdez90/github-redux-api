@@ -3,55 +3,17 @@ import PropTypes from 'prop-types';
 import RepoElement from '../../styles/RepoElement';
 import RepoDetails from '../RepoDetails';
 
-const Repo = ({repo,
-  owner,
-  token,
-  onOpenRepoDetails,
-  isRepoOpen,
-  repoOpen,
-  onStarRepoEventHandler,
-  onErrorWatchEventHandler,
-  onErrorStarEventHandler,
-  onWatchRepoEventHandler,
-  onForkRepoEventHandler,
-  issues,
-  onChangeIssueTab,
-  pulls,
-  branches,
-  commits,
-  onChangePullTab,
-  onLoadOpen,
-}) => (<RepoElement>
-  <h4>{repo.name}</h4>
-  <p>{repo.description}</p>
+const Repo = props => (<RepoElement>
+  <h4>{props.name}</h4>
+  <p>{props.description}</p>
   <RepoDetails
-    name={repo.name}
-    owner={owner}
-    token={token}
-    onOpenRepoDetails={onOpenRepoDetails}
-    repoOpen={repoOpen}
-    isRepoOpen={isRepoOpen}
-    issues={issues}
-    onChangeIssueTab={onChangeIssueTab}
-    pulls={pulls}
-    branches={branches}
-    commits={commits}
-    onChangePullTab={onChangePullTab}
-    onLoadOpen={onLoadOpen}
-    watches={repo.watchers}
-    onWatchRepoEventHandler={onWatchRepoEventHandler}
-    onErrorWatchEventHandler={onErrorWatchEventHandler}
-    forks={repo.forks}
-    stars={repo.stargazers_count}
-    onStarRepoEventHandler={onStarRepoEventHandler}
-    onErrorStarEventHandler={onErrorStarEventHandler}
-    onForkRepoEventHandler={onForkRepoEventHandler}
-    follows={0}
+    {...props}
   />
 </RepoElement>);
 
 Repo.propTypes = {
-  repo: PropTypes.object,
+  name: PropTypes.string,
+  description: PropTypes.string,
   owner: PropTypes.string,
   token: PropTypes.string,
   onOpenRepoDetails: PropTypes.func,
