@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Octicon, { GitPullRequest } from '@githubprimer/octicons-react';
 
 // "created_at": "2018-08-21T16:20:28Z",
 // "updated_at": "2018-08-22T16:33:08Z",
